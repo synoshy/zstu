@@ -41,8 +41,6 @@ public class ArticleEntity implements PersistedEntity {
     @ColumnInfo(index = true)
     private String content;
 
-    private String shortDescription;
-
     private String imageSrc;
 
     private Date lastModified;
@@ -74,14 +72,6 @@ public class ArticleEntity implements PersistedEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
     }
 
     public String getImageSrc() {

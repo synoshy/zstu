@@ -27,8 +27,6 @@ public class Article {
 
     private String content;
 
-    private String shortDescription;
-
     private String imageSrc;
 
     private Date lastModified;
@@ -62,11 +60,7 @@ public class Article {
     }
 
     public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+        return "Short" + content;
     }
 
     public String getImageSrc() {
@@ -84,7 +78,5 @@ public class Article {
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
-
-    //endregion
 
 }

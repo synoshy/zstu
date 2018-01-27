@@ -20,8 +20,6 @@ import com.annimon.stream.Stream;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.synoshy.zstu.data.database.AppDatabase;
 import io.synoshy.zstu.data.entity.ArticleEntity;
 import io.synoshy.zstu.data.entity.Mapper;
@@ -33,8 +31,7 @@ public class ArticleManagerImpl implements ArticleManager {
 
     private AppDatabase appDatabase;
 
-    @Inject
-    ArticleManagerImpl(@NonNull AppDatabase appDatabase) {
+    public ArticleManagerImpl(@NonNull AppDatabase appDatabase) {
         this.appDatabase = appDatabase;
     }
 
@@ -61,8 +58,16 @@ public class ArticleManagerImpl implements ArticleManager {
     }
 
     @Override
-    public LiveData<List<Article>> getPagedList() {
-        return Transformations.map(getAppDatabase().articles().getPagedList(), x -> Stream.of(x).map(Mapper::mapArticle).toList());
+    public LiveData<List<Article>> getList() {
+        return transform(getAppDatabase().articles().getList());
+    }
+
+    @Override
+    public LiveData<List<Article>> getListBatch(int batchNumber, int batchSize) {
+        Validator.throwIf(batchNumber < 0, "Batch number must be a non-negative value.");
+        Validator.throwIf(batchSize <= 0, "Batch size must be a positive value.");
+
+        return transform(getAppDatabase().articles().getListBatch(batchNumber * batchSize, batchSize));
     }
 
     @Override
@@ -74,11 +79,15 @@ public class ArticleManagerImpl implements ArticleManager {
 
     @Override
     public LiveData<List<Article>> getByHeading(@NonNull String heading) {
-        return Transformations.map(getAppDatabase().articles().getByHeading(heading), x -> Stream.of(x).map(Mapper::mapArticle).toList());
+        return transform(getAppDatabase().articles().getByHeading(heading));
     }
 
     @Override
     public LiveData<List<Article>> search(@NonNull String query) {
-        return Transformations.map(getAppDatabase().articles().search(query), x -> Stream.of(x).map(Mapper::mapArticle).toList());
+        return transform(getAppDatabase().articles().search(query));
+    }
+
+    private LiveData<List<Article>> transform(LiveData<List<ArticleEntity>> list) {
+        return Transformations.map(list, x -> Stream.of(x).map(Mapper::mapArticle).toList());
     }
 }

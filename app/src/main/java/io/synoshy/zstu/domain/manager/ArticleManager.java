@@ -32,4 +32,6 @@ public interface ArticleManager extends Manager<Article> {
      * @param query Search pattern.
      */
     LiveData<List<Article>> search(@NonNull String query);
+
+    LiveData<List<Article>> getListBatch(int batchNumber, int batchSize);
 }

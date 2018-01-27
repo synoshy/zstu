@@ -33,4 +33,8 @@ public class ZSTUApplication extends Application {
             .appModule(new AppModule(this))
             .build();
     }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
+    }
 }

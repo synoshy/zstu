@@ -43,7 +43,13 @@ public interface ArticleDao {
      */
     @Query("SELECT * FROM articles " +
             "ORDER BY lastModified DESC")
-    LiveData<List<ArticleEntity>> getPagedList();
+    LiveData<List<ArticleEntity>> getList();
+
+    @Query("SELECT * FROM articles " +
+            "ORDER BY lastModified DESC " +
+            "LIMIT :batchSize " +
+            "OFFSET :skipSize")
+    LiveData<List<ArticleEntity>> getListBatch(int skipSize, int batchSize);
 
     /**
      * Get paged list of {@link ArticleEntity} by heading.

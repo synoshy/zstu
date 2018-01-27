@@ -34,7 +34,7 @@ public interface Manager<T> {
     /**
      * Get a list of entities.
      */
-    LiveData<List<T>> getPagedList();
+    LiveData<List<T>> getList();
 
     /**
      * Delete an entity.

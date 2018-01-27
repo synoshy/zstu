@@ -20,7 +20,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.synoshy.zstu.data.database.AppDatabase;
+import io.synoshy.zstu.data.manager.ArticleManagerImpl;
 import io.synoshy.zstu.domain.Constants;
+import io.synoshy.zstu.domain.manager.ArticleManager;
 
 @Module
 public class DataModule {
@@ -30,5 +32,11 @@ public class DataModule {
     AppDatabase provideAppDatabase(Context context) {
         return Room.databaseBuilder(context, AppDatabase.class, Constants.Database.NAME)
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    ArticleManager provideArticleManager(AppDatabase appDatabase) {
+        return new ArticleManagerImpl(appDatabase);
     }
 }

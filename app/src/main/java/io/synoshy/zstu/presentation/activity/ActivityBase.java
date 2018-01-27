@@ -10,18 +10,16 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.data.di.component;
+package io.synoshy.zstu.presentation.activity;
 
-import javax.inject.Singleton;
+import android.support.v7.app.AppCompatActivity;
 
-import dagger.Component;
-import io.synoshy.zstu.data.di.module.DataModule;
-import io.synoshy.zstu.data.manager.ArticleManagerImpl;
+import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.presentation.di.component.AppComponent;
 
-@Component(modules = DataModule.class, dependencies = AppComponent.class)
-@Singleton
-public interface DataComponent {
+public class ActivityBase extends AppCompatActivity {
 
-    ArticleManagerImpl articleManager();
+    protected AppComponent getAppComponent() {
+        return ((ZSTUApplication)getApplication()).getAppComponent();
+    }
 }
