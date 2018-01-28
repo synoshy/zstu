@@ -17,9 +17,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.util.Date;
+import java.text.DateFormat;
 
-import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.entity.PersistedEntity;
 
 @Entity(tableName = "articles",
@@ -43,7 +42,7 @@ public class ArticleEntity implements PersistedEntity {
 
     private String imageSrc;
 
-    private Date lastModified;
+    private DateFormat lastModified;
 
     //endregion
 
@@ -82,11 +81,11 @@ public class ArticleEntity implements PersistedEntity {
         this.imageSrc = imageSrc;
     }
 
-    public Date getLastModified() {
+    public DateFormat getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Date lastModified) {
+    public void setLastModified(DateFormat lastModified) {
         this.lastModified = lastModified;
     }
 

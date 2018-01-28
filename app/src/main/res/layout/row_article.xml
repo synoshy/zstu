@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="article"
+            type="io.synoshy.zstu.domain.entity.Article" />
+    </data>
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".88"
+        app:cardUseCompatPadding="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            android:src="@color/row_article_background"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:layout_gravity="center"
+            android:padding="@dimen/row_article_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="@{article.heading}"
+                android:textColor="@color/row_article_heading"
+                android:textSize="@dimen/row_article_text_heading" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_article_line_height"
+                android:background="@color/row_article_line"
+                android:layout_marginTop="@dimen/row_article_line_margin"
+                android:layout_marginBottom="@dimen/row_article_line_margin"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="@{article.shortDescription}"
+                android:textAlignment="viewStart"
+                android:textColor="@color/row_article_content"
+                android:textSize="@dimen/row_article_text_description" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:layout_marginTop="@dimen/row_article_date_margin_top"
+                android:text="@{article.lastModified.getCalendar().getTime().toLocaleString()}"
+                android:textAlignment="textEnd"
+                android:textColor="@color/row_article_date" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

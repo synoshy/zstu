@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
+    <color name="background_fade">#ee000000</color>
+    <color name="row_article_heading">#d6d6d6</color>
+    <color name="row_article_content">#d6d6d6</color>
+    <color name="row_article_line">#060728</color>
+    <color name="row_article_date">#b3b5ca</color>
+    <color name="row_article_background">#5c5015</color>
+    <color name="feed_background">#152d84</color>
 </resources>

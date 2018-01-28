@@ -15,8 +15,12 @@ package io.synoshy.zstu.presentation.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,10 +44,44 @@ public class FeedViewModel extends AndroidViewModel {
 
     private void initialize() {
         ((ZSTUApplication)getApplication()).getAppComponent().inject(this);
-        articles = articleManager.getList();
+//        articles = articleManager.getList();
+        articles = loadArticles();
     }
 
     public LiveData<List<Article>> getArticles() {
         return articles;
+    }
+
+    private LiveData<List<Article>> loadArticles() {
+        MutableLiveData<List<Article>> result = new MutableLiveData<>();
+        List<Article> articlesList = new ArrayList<>();
+
+        Article article1 = new Article();
+        article1.setHeading("Професійний розвиток викладача");
+        article1.setContent("Викладач не тільки має навчати студентів, а й сам має навчатися...");
+        DateFormat date1 = DateFormat.getDateTimeInstance();
+        date1.getCalendar().set(2018, 1, 8, 10, 2);
+        article1.setLastModified(date1);
+        articlesList.add(article1);
+
+        Article article2 = new Article();
+        article2.setHeading("Запобігання корупції в Україні");
+        article2.setContent("В ЖДТУ за сприяння ректора відбудеться семінар...");
+        DateFormat date2 = DateFormat.getDateTimeInstance();
+        date2.getCalendar().set(2018, 1, 12, 14, 20);
+        article2.setLastModified(date2);
+        articlesList.add(article2);
+
+        Article article3 = new Article();
+        article3.setHeading("Про подання претендентів на здобуття стипендій Кабінету Міністрів України");
+        article3.setContent("До уваги студентів...");
+        DateFormat date3 = DateFormat.getDateTimeInstance();
+        date3.getCalendar().set(2018, 1, 15, 8, 43);
+        article3.setLastModified(date3);
+        articlesList.add(article3);
+
+        result.setValue(articlesList);
+
+        return result;
     }
 }

@@ -12,12 +12,17 @@
 
 package io.synoshy.zstu.presentation.common.adapter;
 
+import android.databinding.DataBindingComponent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
+import io.synoshy.zstu.R;
+import io.synoshy.zstu.databinding.RowArticleBinding;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.util.Validator;
 
@@ -38,23 +43,41 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
 
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RowArticleBinding binding = RowArticleBinding.inflate(inflater);
+        return new ArticleHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ArticleHolder holder, int position) {
-
+        holder.getBinding().setArticle(articles.get(position));
+        holder.getBinding().notifyChange();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return articles.size();
     }
 
     class ArticleHolder extends RecyclerView.ViewHolder {
 
-        public ArticleHolder(View itemView) {
-            super(itemView);
+        private RowArticleBinding binding;
+
+        private ImageView backgroundImage;
+
+        public ArticleHolder(@NonNull RowArticleBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            //backgroundImage = binding.getRoot().findViewById(R.id.image_background);
+            initialize();
+        }
+
+        public RowArticleBinding getBinding() {
+            return binding;
+        }
+
+        private void initialize() {
+            //backgroundImage.setImageResource(R.color.row_article_background);
         }
     }
 }

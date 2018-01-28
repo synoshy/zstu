@@ -12,25 +12,21 @@
 
 package io.synoshy.zstu.presentation.activity;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
-import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
 import io.synoshy.zstu.presentation.common.adapter.FeedListAdapter;
+import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
 import io.synoshy.zstu.presentation.viewmodel.FeedViewModel;
 
 public class FeedActivity extends ActivityBase {
@@ -41,13 +37,19 @@ public class FeedActivity extends ActivityBase {
     @BindView(R.id.feed_list)
     RecyclerView feedList;
 
+    @BindDimen(R.dimen.row_article_offset_horizontal)
+    int horizontalRowOffset;
+
+    @BindDimen(R.dimen.row_article_offset_vertical)
+    int verticalRowOffset;
+
     private FeedViewModel viewModel;
 
     private FeedListAdapter feedListAdapter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         performInjections();
         initialize();
@@ -60,14 +62,12 @@ public class FeedActivity extends ActivityBase {
 
     private void initialize() {
         viewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
+
         feedListAdapter = new FeedListAdapter(viewModel.getArticles().getValue());
         feedList.setLayoutManager(new LinearLayoutManager(this));
         feedList.setAdapter(feedListAdapter);
-        viewModel.getArticles().observe(this, new Observer<List<Article>>() {
-            @Override
-            public void onChanged(@Nullable List<Article> articles) {
-                feedListAdapter.mergeChanges(articles);
-            }
-        });
+        feedList.addItemDecoration(new OffsetDecoration(horizontalRowOffset, verticalRowOffset));
+
+        viewModel.getArticles().observe(this, articles -> feedListAdapter.mergeChanges(articles));
     }
 }
