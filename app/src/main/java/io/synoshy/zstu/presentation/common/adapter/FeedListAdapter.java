@@ -12,12 +12,14 @@
 
 package io.synoshy.zstu.presentation.common.adapter;
 
-import android.databinding.DataBindingComponent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.List;
 
@@ -63,12 +65,24 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
 
         private RowArticleBinding binding;
 
-        private ImageView backgroundImage;
+        private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+            private Animation vibrationAnimation;
+
+            @Override
+            public void onClick(View view) {
+                if (vibrationAnimation == null)
+                    vibrationAnimation = AnimationUtils.loadAnimation(view.getContext(), R.anim.vibration);
+
+                view.setAnimation(vibrationAnimation);
+                vibrationAnimation.start();
+                notifyItemChanged(getLayoutPosition());
+            }
+        };
 
         public ArticleHolder(@NonNull RowArticleBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            //backgroundImage = binding.getRoot().findViewById(R.id.image_background);
             initialize();
         }
 
@@ -77,7 +91,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
         }
 
         private void initialize() {
-            //backgroundImage.setImageResource(R.color.row_article_background);
+            //binding.getRoot().setOnClickListener(onClickListener);
         }
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="row_article_offset_horizontal">10dp</dimen>
+    <dimen name="row_article_offset_horizontal">5dp</dimen>
     <dimen name="row_article_offset_vertical">10dp</dimen>
     <dimen name="row_article_padding">15dp</dimen>
     <dimen name="row_article_text_heading">30sp</dimen>
