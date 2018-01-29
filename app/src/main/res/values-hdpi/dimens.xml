@@ -9,4 +9,6 @@
     <dimen name="row_article_description">14sp</dimen>
     <dimen name="row_article_date">8sp</dimen>
     <dimen name="row_article_date_margin_top">5sp</dimen>
+    <dimen name="row_article_thumbnail_width">150dp</dimen>
+    <dimen name="row_article_thumbnail_height">100dp</dimen>
 </resources>
