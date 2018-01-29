@@ -21,8 +21,12 @@ import dagger.Module;
 import dagger.Provides;
 import io.synoshy.zstu.data.database.AppDatabase;
 import io.synoshy.zstu.data.manager.ArticleManagerImpl;
+import io.synoshy.zstu.data.network.ArticleLoader;
+import io.synoshy.zstu.data.network.adapter.HtmlElementAdapter;
 import io.synoshy.zstu.domain.Constants;
 import io.synoshy.zstu.domain.manager.ArticleManager;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class DataModule {
@@ -38,5 +42,21 @@ public class DataModule {
     @Singleton
     ArticleManager provideArticleManager(AppDatabase appDatabase) {
         return new ArticleManagerImpl(appDatabase);
+    }
+
+    @Provides
+    @Singleton
+    Retrofit provideRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl("https://ztu.edu.ua/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(HtmlElementAdapter.FACTORY)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    ArticleLoader provideArticleLoader(Retrofit retrofit) {
+        return retrofit.create(ArticleLoader.class);
     }
 }

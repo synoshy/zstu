@@ -14,6 +14,9 @@ package io.synoshy.zstu;
 
 import android.app.Application;
 
+import javax.inject.Inject;
+
+import io.synoshy.zstu.data.network.ArticleLoader;
 import io.synoshy.zstu.presentation.di.component.AppComponent;
 import io.synoshy.zstu.presentation.di.component.DaggerAppComponent;
 import io.synoshy.zstu.presentation.di.module.AppModule;
@@ -21,6 +24,9 @@ import io.synoshy.zstu.presentation.di.module.AppModule;
 public class ZSTUApplication extends Application {
 
     private AppComponent appComponent;
+
+    @Inject
+    ArticleLoader articleLoader;
 
     @Override
     public void onCreate() {
@@ -32,9 +38,15 @@ public class ZSTUApplication extends Application {
         appComponent = DaggerAppComponent.builder()
             .appModule(new AppModule(this))
             .build();
+
+        appComponent.inject(this);
     }
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public ArticleLoader getArticleLoader() {
+        return articleLoader;
     }
 }

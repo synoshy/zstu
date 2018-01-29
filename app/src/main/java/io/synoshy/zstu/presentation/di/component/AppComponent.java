@@ -17,6 +17,7 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.data.di.module.DataModule;
 import io.synoshy.zstu.presentation.activity.FeedActivity;
 import io.synoshy.zstu.presentation.di.module.AppModule;
@@ -27,6 +28,8 @@ import io.synoshy.zstu.presentation.viewmodel.FeedViewModel;
 public interface AppComponent {
 
     Context context();
+
+    void inject(ZSTUApplication application);
 
     void inject(FeedActivity activity);
 
