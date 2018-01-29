@@ -13,4 +13,6 @@
     <color name="row_article_date">#bfab4a</color>
     <color name="row_article_background">#083446</color>
     <color name="feed_background">#083446</color>
+    <color name="background_gradient_start">#001063</color>
+    <color name="background_gradient_end">#00619e</color>
 </resources>
