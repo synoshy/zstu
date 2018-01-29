@@ -1,8 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="Base.Theme.AppCompat">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@drawable/background_loading</item>
         <item name="windowNoTitle">true</item>
     </style>
 

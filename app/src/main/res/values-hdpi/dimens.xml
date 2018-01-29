@@ -3,9 +3,10 @@
     <dimen name="row_article_offset_horizontal">5dp</dimen>
     <dimen name="row_article_offset_vertical">10dp</dimen>
     <dimen name="row_article_padding">15dp</dimen>
-    <dimen name="row_article_text_heading">30sp</dimen>
-    <dimen name="row_article_line_height">3dp</dimen>
+    <dimen name="row_article_heading">24sp</dimen>
+    <dimen name="row_article_line_height">1dp</dimen>
     <dimen name="row_article_line_margin">15dp</dimen>
-    <dimen name="row_article_text_description">20sp</dimen>
+    <dimen name="row_article_description">14sp</dimen>
+    <dimen name="row_article_date">8sp</dimen>
     <dimen name="row_article_date_margin_top">5sp</dimen>
 </resources>
