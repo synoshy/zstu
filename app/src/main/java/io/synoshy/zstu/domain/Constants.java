@@ -14,10 +14,24 @@ package io.synoshy.zstu.domain;
 
 public class Constants {
 
-    public class Database {
+    public static class Database {
 
         public static final int VERSION = 1;
 
         public static final String NAME = "ZSTU";
+    }
+
+    public static class Service {
+
+        public static final String KEY_LOAD_URL = "key.load.url";
+
+        public static final String KEY_RESCHEDULE_NEEDED = "key.reschedule.needed";
+    }
+
+    public static class Locale {
+
+        public static final String DATE_TIME_FORMAT = "dd.MM.yyyy hh:mm";
+
+        public static final java.util.Locale UKRAINIAN = new java.util.Locale("uk", "UA");
     }
 }

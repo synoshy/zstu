@@ -79,7 +79,7 @@
                     android:layout_marginTop="@dimen/row_article_date_margin_top"
                     android:background="@color/transparent"
                     android:gravity="end"
-                    android:text="@{article.lastModified.getCalendar().getTime().toLocaleString()}"
+                    android:text="@{article.lastModified.toLocaleString()}"
                     android:textColor="@color/row_article_date"
                     android:textSize="@dimen/row_article_date" />
 

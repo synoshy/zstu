@@ -10,17 +10,9 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.data.network;
+package io.synoshy.zstu.domain.exception;
 
-import org.jsoup.nodes.Element;
+public interface UnsafeRunnable {
 
-import okhttp3.HttpUrl;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Url;
-
-public interface ArticleLoader {
-
-    @GET
-    Call<Element> getNewsContainer(@Url HttpUrl url);
+    void run() throws Exception;
 }

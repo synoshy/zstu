@@ -61,7 +61,7 @@ public class FeedViewModel extends AndroidViewModel {
         article1.setContent("Викладач не тільки має навчати студентів, а й сам має навчатися...");
         DateFormat date1 = DateFormat.getDateTimeInstance();
         date1.getCalendar().set(2018, 1, 8, 10, 2);
-        article1.setLastModified(date1);
+        article1.setLastModified(date1.getCalendar().getTime());
         articlesList.add(article1);
 
         Article article2 = new Article();
@@ -69,7 +69,7 @@ public class FeedViewModel extends AndroidViewModel {
         article2.setContent("В ЖДТУ за сприяння ректора відбудеться семінар...");
         DateFormat date2 = DateFormat.getDateTimeInstance();
         date2.getCalendar().set(2018, 1, 12, 14, 20);
-        article2.setLastModified(date2);
+        article2.setLastModified(date2.getCalendar().getTime());
         articlesList.add(article2);
 
         Article article3 = new Article();
@@ -77,7 +77,7 @@ public class FeedViewModel extends AndroidViewModel {
         article3.setContent("До уваги студентів...");
         DateFormat date3 = DateFormat.getDateTimeInstance();
         date3.getCalendar().set(2018, 1, 15, 8, 43);
-        article3.setLastModified(date3);
+        article3.setLastModified(date3.getCalendar().getTime());
         articlesList.add(article3);
 
         result.setValue(articlesList);

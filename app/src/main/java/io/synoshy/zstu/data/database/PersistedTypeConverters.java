@@ -12,26 +12,23 @@
 
 package io.synoshy.zstu.data.database;
 
-import java.text.DateFormat;
 import java.util.Date;
 import android.arch.persistence.room.TypeConverter;
 
 public class PersistedTypeConverters {
 
     @TypeConverter
-    public static DateFormat fromTimestamp(Long timestamp) {
+    public static Date fromTimestamp(Long timestamp) {
         if (timestamp == null)
             return null;
 
-        DateFormat result = DateFormat.getDateTimeInstance();
-        result.getCalendar().setTimeInMillis(timestamp);
-        return result;
+        return new Date(timestamp);
     }
 
     @TypeConverter
-    public static Long toTimestamp(DateFormat date) {
+    public static Long toTimestamp(Date date) {
         return date == null
                 ? null
-                : date.getCalendar().getTimeInMillis();
+                : date.getTime();
     }
 }

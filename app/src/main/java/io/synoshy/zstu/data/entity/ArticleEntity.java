@@ -17,7 +17,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.text.DateFormat;
+import java.util.Date;
 
 import io.synoshy.zstu.domain.entity.PersistedEntity;
 
@@ -40,9 +40,13 @@ public class ArticleEntity implements PersistedEntity {
     @ColumnInfo(index = true)
     private String content;
 
+    private String description;
+
     private String imageSrc;
 
-    private DateFormat lastModified;
+    private Date lastModified;
+
+    private String url;
 
     //endregion
 
@@ -73,6 +77,14 @@ public class ArticleEntity implements PersistedEntity {
         this.content = content;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getImageSrc() {
         return imageSrc;
     }
@@ -81,12 +93,20 @@ public class ArticleEntity implements PersistedEntity {
         this.imageSrc = imageSrc;
     }
 
-    public DateFormat getLastModified() {
+    public Date getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(DateFormat lastModified) {
+    public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     //endregion

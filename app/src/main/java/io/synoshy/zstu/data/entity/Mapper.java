@@ -24,6 +24,7 @@ public class Mapper {
         result.setId(article.getId());
         result.setHeading(article.getHeading());
         result.setContent(article.getContent());
+        result.setDescription(article.getDescription());
         result.setImageSrc(article.getImageSrc());
         result.setLastModified(article.getLastModified());
 
@@ -38,6 +39,7 @@ public class Mapper {
         result.setId(articleEntity.getId());
         result.setHeading(articleEntity.getHeading());
         result.setContent(articleEntity.getContent());
+        result.setDescription(articleEntity.getDescription());
         result.setImageSrc(articleEntity.getImageSrc());
         result.setLastModified(articleEntity.getLastModified());
 

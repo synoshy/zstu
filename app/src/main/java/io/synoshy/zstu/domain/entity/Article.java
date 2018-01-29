@@ -12,7 +12,7 @@
 
 package io.synoshy.zstu.domain.entity;
 
-import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Class that represents a news Article.
@@ -27,9 +27,13 @@ public class Article {
 
     private String content;
 
+    private String description;
+
     private String imageSrc;
 
-    private DateFormat lastModified;
+    private Date lastModified;
+
+    private String url;
 
     //endregion
 
@@ -59,6 +63,14 @@ public class Article {
         this.content = content;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getShortDescription() {
         return "Short" + content;
     }
@@ -71,12 +83,22 @@ public class Article {
         this.imageSrc = imageSrc;
     }
 
-    public DateFormat getLastModified() {
+    public Date getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(DateFormat lastModified) {
+    public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    //endregion
 
 }
