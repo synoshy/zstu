@@ -23,69 +23,78 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:background="@color/transparent"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="@dimen/row_article_padding">
 
-            <FrameLayout
-                android:layout_width="@dimen/row_article_thumbnail_width"
-                android:layout_height="@dimen/row_article_thumbnail_height"
-                android:layout_gravity="center_vertical"
-                android:paddingEnd="5dp"
-                android:paddingStart="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="@{article.heading}"
+                android:textColor="@color/row_article_heading"
+                android:textSize="@dimen/row_article_heading" />
 
-                <ImageView
-                    android:id="@+id/thumbnail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="@{article.imageSrc == null || article.imageSrc.isEmpty() ? View.INVISIBLE : View.VISIBLE}" />
-
-            </FrameLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_article_line_height"
+                android:layout_marginBottom="@dimen/row_article_line_margin"
+                android:layout_marginTop="@dimen/row_article_line_margin"
+                android:background="@color/row_article_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@color/transparent"
-                android:orientation="vertical"
-                android:padding="@dimen/row_article_padding">
+                android:background="@color/transparent">
 
-                <TextView
+                <FrameLayout
+                    android:layout_width="@dimen/row_article_thumbnail_width"
+                    android:layout_height="@dimen/row_article_thumbnail_height"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/transparent"
+                    android:visibility="@{article.imageSrc == null ? View.GONE : View.VISIBLE}">
+
+                    <ImageView
+                        android:id="@+id/thumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:background="@color/transparent"
+                        android:scaleType="centerCrop" />
+
+                </FrameLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:background="@color/transparent"
-                    android:text="@{article.heading}"
-                    android:textColor="@color/row_article_heading"
-                    android:textSize="@dimen/row_article_heading" />
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/row_article_line_height"
-                    android:layout_marginBottom="@dimen/row_article_line_margin"
-                    android:layout_marginTop="@dimen/row_article_line_margin"
-                    android:background="@color/row_article_line" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:text="@{article.description}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/row_article_content"
+                        android:textSize="@dimen/row_article_description" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:text="@{article.description}"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/row_article_content"
-                    android:textSize="@dimen/row_article_description" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/row_article_date_margin_top"
+                        android:background="@color/transparent"
+                        android:gravity="end"
+                        android:text="@{article.lastModified.toLocaleString()}"
+                        android:textColor="@color/row_article_date"
+                        android:textSize="@dimen/row_article_date" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/row_article_date_margin_top"
-                    android:background="@color/transparent"
-                    android:gravity="end"
-                    android:text="@{article.lastModified.toLocaleString()}"
-                    android:textColor="@color/row_article_date"
-                    android:textSize="@dimen/row_article_date" />
+                </LinearLayout>
 
             </LinearLayout>
 
