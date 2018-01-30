@@ -26,6 +26,7 @@ import io.synoshy.zstu.R;
 import io.synoshy.zstu.databinding.RowArticleBinding;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.util.Validator;
+import io.synoshy.zstu.presentation.viewmodel.ArticleRowViewModel;
 
 public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ArticleHolder> {
 
@@ -51,7 +52,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
 
     @Override
     public void onBindViewHolder(ArticleHolder holder, int position) {
-        holder.getBinding().setArticle(articles.get(position));
+        holder.getBinding().setModel(new ArticleRowViewModel(articles.get(position)));
         holder.getBinding().notifyChange();
     }
 

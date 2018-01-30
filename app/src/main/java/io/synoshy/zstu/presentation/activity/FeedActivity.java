@@ -15,7 +15,6 @@ package io.synoshy.zstu.presentation.activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +33,6 @@ import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
 import io.synoshy.zstu.presentation.common.adapter.FeedListAdapter;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
-import io.synoshy.zstu.presentation.task.SimpleAsyncTask;
 import io.synoshy.zstu.presentation.viewmodel.FeedViewModel;
 
 public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener {
@@ -92,5 +90,11 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         viewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        feedListAdapter.notifyDataSetChanged();
     }
 }

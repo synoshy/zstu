@@ -10,15 +10,16 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.viewmodel;
+package io.synoshy.zstu.domain.util;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
-import android.support.annotation.NonNull;
+import android.content.res.Resources;
 
-public class ArticleViewModel extends AndroidViewModel {
+public class ViewUtil {
 
-    public ArticleViewModel(@NonNull Application application) {
-        super(application);
+    /**
+    * Get device width in pixels.
+    */
+    public static int getDeviceWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 }
