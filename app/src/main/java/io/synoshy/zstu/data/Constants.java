@@ -23,6 +23,17 @@ public class Constants {
         public static final String NAME = "ZSTU";
     }
 
+    public static class Cache {
+
+        public static final int VERSION = 1;
+
+        public static final String PATH_NEWS_IMAGES = "news";
+
+        public static final int MAX_NEWS_IMAGES_COUNT = 50;
+
+        public static final long MAX_NEWS_IMAGES_SIZE = 1024 * 1024 * 50;
+    }
+
     public static class Network {
 
         public static final HttpUrl NEWS_ULR = HttpUrl.parse("https://ztu.edu.ua/");

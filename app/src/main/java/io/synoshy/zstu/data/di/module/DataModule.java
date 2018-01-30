@@ -15,18 +15,21 @@ package io.synoshy.zstu.data.di.module;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.synoshy.zstu.data.Constants;
+import io.synoshy.zstu.data.cache.DiskCacheImpl;
 import io.synoshy.zstu.data.database.AppDatabase;
 import io.synoshy.zstu.data.manager.ArticleManagerImpl;
 import io.synoshy.zstu.data.network.ArticleLoader;
 import io.synoshy.zstu.data.network.adapter.HtmlElementAdapter;
-import io.synoshy.zstu.data.Constants;
+import io.synoshy.zstu.domain.cache.DiskCache;
 import io.synoshy.zstu.domain.manager.ArticleManager;
+import okhttp3.internal.DiskLruCache;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class DataModule {
@@ -42,6 +45,21 @@ public class DataModule {
     @Singleton
     ArticleManager provideArticleManager(AppDatabase appDatabase, ArticleLoader articleLoader) {
         return new ArticleManagerImpl(appDatabase, articleLoader);
+    }
+
+    @Provides
+    @Singleton
+    @Named("IMAGE")
+    DiskLruCache provideImageCache(Context context) {
+        // will be implemented soon
+        return null;
+    }
+
+    @Provides
+    @Singleton
+    @Named("IMAGE")
+    DiskCache provideDiskCache(@Named("IMAGE") DiskLruCache imageCache) {
+        return new DiskCacheImpl(imageCache);
     }
 
     @Provides
