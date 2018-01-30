@@ -31,7 +31,7 @@ import io.synoshy.zstu.data.entity.Mapper;
 import io.synoshy.zstu.data.network.ArticleLoader;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
-import io.synoshy.zstu.domain.util.ArticleHtmlParser;
+import io.synoshy.zstu.data.util.ArticleHtmlParser;
 import io.synoshy.zstu.domain.util.Validator;
 import io.synoshy.zstu.presentation.task.SimpleAsyncTask;
 import okhttp3.HttpUrl;

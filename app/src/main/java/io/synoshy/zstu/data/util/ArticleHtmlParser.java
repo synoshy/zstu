@@ -10,7 +10,7 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.domain.util;
+package io.synoshy.zstu.data.util;
 
 import android.support.annotation.NonNull;
 
