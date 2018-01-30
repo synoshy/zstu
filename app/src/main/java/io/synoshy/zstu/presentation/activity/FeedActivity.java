@@ -13,10 +13,16 @@
 package io.synoshy.zstu.presentation.activity;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,12 +30,14 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
+import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
 import io.synoshy.zstu.presentation.common.adapter.FeedListAdapter;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
+import io.synoshy.zstu.presentation.task.SimpleAsyncTask;
 import io.synoshy.zstu.presentation.viewmodel.FeedViewModel;
 
-public class FeedActivity extends ActivityBase {
+public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     ArticleManager articleManager;
@@ -42,6 +50,9 @@ public class FeedActivity extends ActivityBase {
 
     @BindDimen(R.dimen.row_article_offset_vertical)
     int verticalRowOffset;
+
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private FeedViewModel viewModel;
 
@@ -63,11 +74,23 @@ public class FeedActivity extends ActivityBase {
     private void initialize() {
         viewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
 
-        feedListAdapter = new FeedListAdapter(viewModel.getArticles().getValue());
+        List<Article> articles = viewModel.getArticles().getValue();
+        if (articles == null)
+            articles = new ArrayList<>();
+
+        feedListAdapter = new FeedListAdapter(articles);
         feedList.setLayoutManager(new LinearLayoutManager(this));
         feedList.setAdapter(feedListAdapter);
         feedList.addItemDecoration(new OffsetDecoration(horizontalRowOffset, verticalRowOffset));
 
-        viewModel.getArticles().observe(this, articles -> feedListAdapter.mergeChanges(articles));
+        viewModel.getArticles().observe(this, x -> feedListAdapter.mergeChanges(x));
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.zstu_blue, R.color.zstu_yellow);
+        swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        viewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
     }
 }

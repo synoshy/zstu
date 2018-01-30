@@ -10,7 +10,9 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.domain;
+package io.synoshy.zstu.data;
+
+import okhttp3.HttpUrl;
 
 public class Constants {
 
@@ -21,11 +23,9 @@ public class Constants {
         public static final String NAME = "ZSTU";
     }
 
-    public static class Service {
+    public static class Network {
 
-        public static final String KEY_LOAD_URL = "key.load.url";
-
-        public static final String KEY_RESCHEDULE_NEEDED = "key.reschedule.needed";
+        public static final HttpUrl NEWS_ULR = HttpUrl.parse("https://ztu.edu.ua/");
     }
 
     public static class Locale {

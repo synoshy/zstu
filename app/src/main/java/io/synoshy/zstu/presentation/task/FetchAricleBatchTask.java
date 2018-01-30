@@ -20,7 +20,7 @@ import java.util.List;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
 
-public class FetchBatchTask extends AsyncTask<FetchBatchTask.Params, Void, LiveData<List<Article>>> {
+public class FetchAricleBatchTask extends AsyncTask<FetchAricleBatchTask.Params, Void, LiveData<List<Article>>> {
 
     @Override
     protected LiveData<List<Article>> doInBackground(Params... params) {

@@ -12,26 +12,40 @@
 
 package io.synoshy.zstu.domain.manager;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import java.util.Date;
 import java.util.List;
 
 import io.synoshy.zstu.domain.entity.Article;
+import okhttp3.HttpUrl;
 
 public interface ArticleManager extends Manager<Article> {
 
     /**
-     * Get paged list of {@link Article} by heading.
+     * Get list of {@link Article} by heading.
      * @param heading Heading pattern.
      */
     LiveData<List<Article>> getByHeading(@NonNull String heading);
 
     /**
-     * Get paged list of {@link Article} that matches search query.
+     * Get list of {@link Article} that matches search query.
      * @param query Search pattern.
      */
     LiveData<List<Article>> search(@NonNull String query);
 
+    /**
+     * Get list batch of {@link Article}.
+     * @param batchNumber Batch number.
+     * @param batchSize Batch size.
+     */
     LiveData<List<Article>> getListBatch(int batchNumber, int batchSize);
+
+    /**
+     * Load list of {@link Article} from network.
+     * @param url Url to load data.
+     */
+    void loadNewsFromNetwork(@NonNull HttpUrl url, Date newerThan, @NonNull Function<List<Article>, Void> callback);
 }

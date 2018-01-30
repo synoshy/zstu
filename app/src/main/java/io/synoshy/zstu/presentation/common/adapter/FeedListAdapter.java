@@ -32,7 +32,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
 
     private List<Article> articles;
 
-    public FeedListAdapter(List<Article> articles) {
+    public FeedListAdapter(@NonNull List<Article> articles) {
         this.articles = articles;
     }
 

@@ -23,7 +23,7 @@ import io.synoshy.zstu.data.database.AppDatabase;
 import io.synoshy.zstu.data.manager.ArticleManagerImpl;
 import io.synoshy.zstu.data.network.ArticleLoader;
 import io.synoshy.zstu.data.network.adapter.HtmlElementAdapter;
-import io.synoshy.zstu.domain.Constants;
+import io.synoshy.zstu.data.Constants;
 import io.synoshy.zstu.domain.manager.ArticleManager;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -40,8 +40,8 @@ public class DataModule {
 
     @Provides
     @Singleton
-    ArticleManager provideArticleManager(AppDatabase appDatabase) {
-        return new ArticleManagerImpl(appDatabase);
+    ArticleManager provideArticleManager(AppDatabase appDatabase, ArticleLoader articleLoader) {
+        return new ArticleManagerImpl(appDatabase, articleLoader);
     }
 
     @Provides
@@ -49,7 +49,6 @@ public class DataModule {
     Retrofit provideRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl("https://ztu.edu.ua/")
-                .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(HtmlElementAdapter.FACTORY)
                 .build();
     }

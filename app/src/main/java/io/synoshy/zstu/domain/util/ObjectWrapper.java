@@ -10,19 +10,23 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.data.database;
+package io.synoshy.zstu.domain.util;
 
-import android.arch.persistence.room.*;
+public class ObjectWrapper<T> {
 
-import io.synoshy.zstu.data.entity.ArticleEntity;
-import io.synoshy.zstu.data.Constants;
-import io.synoshy.zstu.data.dao.ArticleDao;
+    private T object;
 
-import android.arch.persistence.room.TypeConverters;
+    public ObjectWrapper() {}
 
-@Database(entities = ArticleEntity.class, version = Constants.Database.VERSION)
-@TypeConverters(PersistedTypeConverters.class)
-public abstract class AppDatabase extends RoomDatabase {
+    public ObjectWrapper(T object) {
+        this.object = object;
+    }
 
-    public abstract ArticleDao articles();
+    public T get() {
+        return object;
+    }
+
+    public void set(T object) {
+        this.object = object;
+    }
 }

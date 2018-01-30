@@ -45,8 +45,4 @@ public class ZSTUApplication extends Application {
     public AppComponent getAppComponent() {
         return appComponent;
     }
-
-    public ArticleLoader getArticleLoader() {
-        return articleLoader;
-    }
 }

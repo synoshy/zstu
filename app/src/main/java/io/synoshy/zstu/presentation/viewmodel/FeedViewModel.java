@@ -15,20 +15,21 @@ package io.synoshy.zstu.presentation.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.synoshy.zstu.R;
 import io.synoshy.zstu.ZSTUApplication;
+import io.synoshy.zstu.data.Constants;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
-import io.synoshy.zstu.domain.util.Validator;
 
 public class FeedViewModel extends AndroidViewModel {
 
@@ -44,44 +45,33 @@ public class FeedViewModel extends AndroidViewModel {
 
     private void initialize() {
         ((ZSTUApplication)getApplication()).getAppComponent().inject(this);
-//        articles = articleManager.getList();
-        articles = loadArticles();
+        articles = articleManager.getList();
     }
 
     public LiveData<List<Article>> getArticles() {
         return articles;
     }
 
-    private LiveData<List<Article>> loadArticles() {
-        MutableLiveData<List<Article>> result = new MutableLiveData<>();
-        List<Article> articlesList = new ArrayList<>();
+    public void updateData(@Nullable Runnable callback) {
+        List<Article> articles = this.articles.getValue();
+        Date newerThan = null;
+        if (articles != null && articles.size() > 0)
+            newerThan = articles.get(0).getLastModified();
 
-        Article article1 = new Article();
-        article1.setHeading("Професійний розвиток викладача");
-        article1.setContent("Викладач не тільки має навчати студентів, а й сам має навчатися...");
-        DateFormat date1 = DateFormat.getDateTimeInstance();
-        date1.getCalendar().set(2018, 1, 8, 10, 2);
-        article1.setLastModified(date1.getCalendar().getTime());
-        articlesList.add(article1);
+        articleManager.loadNewsFromNetwork(Constants.Network.NEWS_ULR, newerThan, x -> {
+            Context context = getApplication().getApplicationContext();
+            if (x == null) {
+                Toast.makeText(context,
+                        context.getText(R.string.error_load_news_from_network),
+                        Toast.LENGTH_SHORT).show();
+            }
+            else if (x.size() > 0)
+                articleManager.createOrUpdate(x.toArray(new Article[0]));
 
-        Article article2 = new Article();
-        article2.setHeading("Запобігання корупції в Україні");
-        article2.setContent("В ЖДТУ за сприяння ректора відбудеться семінар...");
-        DateFormat date2 = DateFormat.getDateTimeInstance();
-        date2.getCalendar().set(2018, 1, 12, 14, 20);
-        article2.setLastModified(date2.getCalendar().getTime());
-        articlesList.add(article2);
+            if (callback != null)
+                callback.run();
 
-        Article article3 = new Article();
-        article3.setHeading("Про подання претендентів на здобуття стипендій Кабінету Міністрів України");
-        article3.setContent("До уваги студентів...");
-        DateFormat date3 = DateFormat.getDateTimeInstance();
-        date3.getCalendar().set(2018, 1, 15, 8, 43);
-        article3.setLastModified(date3.getCalendar().getTime());
-        articlesList.add(article3);
-
-        result.setValue(articlesList);
-
-        return result;
+            return null;
+        });
     }
 }

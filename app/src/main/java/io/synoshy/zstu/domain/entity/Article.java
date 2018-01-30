@@ -71,10 +71,6 @@ public class Article {
         this.description = description;
     }
 
-    public String getShortDescription() {
-        return "Short" + content;
-    }
-
     public String getImageSrc() {
         return imageSrc;
     }

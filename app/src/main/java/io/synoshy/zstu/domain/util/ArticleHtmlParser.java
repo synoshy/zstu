@@ -19,7 +19,7 @@ import org.jsoup.nodes.Element;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.synoshy.zstu.domain.Constants;
+import io.synoshy.zstu.data.Constants;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.exception.ExceptionWrapper;
 

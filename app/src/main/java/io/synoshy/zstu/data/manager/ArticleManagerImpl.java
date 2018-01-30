@@ -12,27 +12,42 @@
 
 package io.synoshy.zstu.data.manager;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.annimon.stream.Stream;
 
+import org.jsoup.nodes.Element;
+
+import java.util.Date;
 import java.util.List;
 
 import io.synoshy.zstu.data.database.AppDatabase;
 import io.synoshy.zstu.data.entity.ArticleEntity;
 import io.synoshy.zstu.data.entity.Mapper;
+import io.synoshy.zstu.data.network.ArticleLoader;
 import io.synoshy.zstu.domain.entity.Article;
 import io.synoshy.zstu.domain.manager.ArticleManager;
+import io.synoshy.zstu.domain.util.ArticleHtmlParser;
 import io.synoshy.zstu.domain.util.Validator;
+import io.synoshy.zstu.presentation.task.SimpleAsyncTask;
+import okhttp3.HttpUrl;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ArticleManagerImpl implements ArticleManager {
 
     private AppDatabase appDatabase;
 
-    public ArticleManagerImpl(@NonNull AppDatabase appDatabase) {
+    private ArticleLoader articleLoader;
+
+    public ArticleManagerImpl(@NonNull AppDatabase appDatabase, @NonNull ArticleLoader articleLoader) {
         this.appDatabase = appDatabase;
+        this.articleLoader = articleLoader;
     }
 
     protected AppDatabase getAppDatabase() {
@@ -49,7 +64,8 @@ public class ArticleManagerImpl implements ArticleManager {
         ArticleEntity[] articleEntities = Stream.of(entities)
                 .map(Mapper::mapArticleEntity)
                 .toArray(ArticleEntity[]::new);
-        getAppDatabase().articles().createOrUpdate(articleEntities);
+
+        SimpleAsyncTask.execute(() -> getAppDatabase().articles().createOrUpdate(articleEntities));
     }
 
     @Override
@@ -68,6 +84,27 @@ public class ArticleManagerImpl implements ArticleManager {
         Validator.throwIf(batchSize <= 0, "Batch size must be a positive value.");
 
         return transform(getAppDatabase().articles().getListBatch(batchNumber * batchSize, batchSize));
+    }
+
+    @Override
+    public void loadNewsFromNetwork(@NonNull HttpUrl url, @Nullable final Date newerThan, @NonNull Function<List<Article>, Void> callback) {
+        articleLoader.getNewsContainer(url).enqueue(new Callback<Element>() {
+
+            @Override
+            public void onResponse(Call<Element> call, Response<Element> response) {
+                Stream<Article> stream = Stream.of(response.body().select(".news-container"))
+                        .map(ArticleHtmlParser::parseArticle);
+                if (newerThan != null)
+                    stream = stream.filter(x -> x.getLastModified().compareTo(newerThan) > 0);
+
+                callback.apply(stream.toList());
+            }
+
+            @Override
+            public void onFailure(Call<Element> call, Throwable t) {
+                callback.apply(null);
+            }
+        });
     }
 
     @Override
