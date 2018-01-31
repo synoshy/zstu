@@ -8,7 +8,7 @@ This is an open-source project, so it is opened for questions and suggestion. It
 To clone the repository execute the command in destination path:
 
 ```
-git clone https://github.com/synoshy/ZSTU.git
+git clone https://github.com/synoshy/zstu.git
 ```
 
 ### Prerequisites
@@ -21,7 +21,8 @@ When IDE is installed, please install Android SDK with API 21. This is the least
 
 ## Built With
 
-* Currently nothing :)
+* Android Studio 3.0.1
+* Gradle 4.1
 
 ## Contributing
 
@@ -29,13 +30,13 @@ Temporary contributing is disabled. Anyway, you can still contact the developer 
 
 ## Versioning
 
-For the versions available, see the [tags on this repository](https://github.com/synoshy/ZSTU/tags). 
+For the versions available, see the [tags on this repository](https://github.com/synoshy/zstu/tags). 
 
 ## Authors
 
 * **Denys Zosimovych** - *Initial work* - [synoshy](https://github.com/synoshy)
 
-See also the list of [contributors](https://github.com/synoshy/ZSTU/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/synoshy/zstu/contributors) who participated in this project.
 
 ## License
 
