@@ -38,6 +38,8 @@ For the versions available, see the [tags on this repository](https://github.com
 
 See also the list of [contributors](https://github.com/synoshy/zstu/contributors) who participated in this project.
 
-## License
+## Licenses
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+Licenses of the used components and libraries can be found in the [LICENSES.txt](LICENSES.txt) file.
