@@ -38,8 +38,9 @@ public class ArticleRowViewModel extends ViewModel {
     }
 
     public int getImageVisibility() {
-        return article == null || article.getImageSrc() == null || ViewUtil.getDeviceWidth() < THRESHOLD_SHOW_IMAGE
-                ? View.GONE
-                : View.VISIBLE;
+        return View.GONE;   //disabled until image caching is implemented
+//        return article == null || article.getImageSrc() == null || ViewUtil.getDeviceWidth() < THRESHOLD_SHOW_IMAGE
+//                ? View.GONE
+//                : View.VISIBLE;
     }
 }
