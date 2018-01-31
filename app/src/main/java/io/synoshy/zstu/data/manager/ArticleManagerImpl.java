@@ -92,7 +92,7 @@ public class ArticleManagerImpl implements ArticleManager {
 
             @Override
             public void onResponse(Call<Element> call, Response<Element> response) {
-                Stream<Article> stream = Stream.of(response.body().select(".news-container"))
+                Stream<Article> stream = Stream.of(ArticleHtmlParser.selectArticleNodes(response.body()))
                         .map(ArticleHtmlParser::parseArticle);
                 if (newerThan != null)
                     stream = stream.filter(x -> x.getLastModified().compareTo(newerThan) > 0);

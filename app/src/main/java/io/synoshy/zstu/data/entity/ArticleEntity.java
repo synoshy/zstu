@@ -16,6 +16,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.text.TextUtils;
 
 import java.util.Date;
 
@@ -111,4 +112,17 @@ public class ArticleEntity implements PersistedEntity {
 
     //endregion
 
+    @Override
+    public boolean equals(Object obj) {
+        ArticleEntity another = (ArticleEntity)obj;
+        if (another == null) return false;
+
+        return TextUtils.equals(this.getHeading(), another.getHeading())
+                && TextUtils.equals(this.getDescription(), another.getDescription())
+                && TextUtils.equals(this.getContent(), another.getContent())
+                && TextUtils.equals(this.getImageSrc(), another.getImageSrc())
+                && TextUtils.equals(this.getUrl(), another.getUrl())
+                && (this.getLastModified() != null && this.getLastModified().equals(another.getLastModified())
+                || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
+    }
 }

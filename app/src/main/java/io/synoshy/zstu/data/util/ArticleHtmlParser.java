@@ -15,6 +15,7 @@ package io.synoshy.zstu.data.util;
 import android.support.annotation.NonNull;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,20 +28,20 @@ public class ArticleHtmlParser {
 
     private ArticleHtmlParser() {}
 
-    public static Article parseArticle(@NonNull Element rootNode) {
+    public static Article parseArticle(@NonNull Element articleNode) {
         Article result = new Article();
 
-        Element heading = rootNode.selectFirst("h4 a");
+        Element heading = articleNode.selectFirst("h4 a");
         if (heading != null) {
             result.setHeading(heading.text());
             result.setUrl(heading.attr("href"));
         }
 
-        Element image = rootNode.selectFirst("img");
+        Element image = articleNode.selectFirst("img");
         if (image != null)
             result.setImageSrc(image.attr("src"));
 
-        Element time = rootNode.selectFirst("p.time");
+        Element time = articleNode.selectFirst("p.time");
         String timeString;
         if (time != null && (timeString = time.text()) != null) {
             ExceptionWrapper.execute(() -> {
@@ -49,10 +50,14 @@ public class ArticleHtmlParser {
             });
         }
 
-        Element description = rootNode.selectFirst("div p:not(.time)");
+        Element description = articleNode.selectFirst("div p:not(.time)");
         if (description != null)
             result.setDescription(description.text());
 
         return result;
+    }
+
+    public static Elements selectArticleNodes(@NonNull Element body) {
+        return body.select(".news-container");
     }
 }

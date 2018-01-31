@@ -39,9 +39,6 @@ public class HtmlElementAdapter implements Converter<ResponseBody, Element> {
 
     @Override
     public Element convert(ResponseBody value) throws IOException {
-        Document document = Jsoup.parse(value.string());
-        Element node = document.body();
-
-        return node;
+        return Jsoup.parse(value.string());
     }
 }

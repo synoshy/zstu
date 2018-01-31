@@ -12,6 +12,8 @@
 
 package io.synoshy.zstu.domain.entity;
 
+import android.text.TextUtils;
+
 import java.util.Date;
 
 /**
@@ -97,4 +99,17 @@ public class Article {
 
     //endregion
 
+    @Override
+    public boolean equals(Object obj) {
+        Article another = (Article)obj;
+        if (another == null) return false;
+
+        return TextUtils.equals(this.getHeading(), another.getHeading())
+                && TextUtils.equals(this.getDescription(), another.getDescription())
+                && TextUtils.equals(this.getContent(), another.getContent())
+                && TextUtils.equals(this.getImageSrc(), another.getImageSrc())
+                && TextUtils.equals(this.getUrl(), another.getUrl())
+                && (this.getLastModified() != null && this.getLastModified().equals(another.getLastModified())
+                    || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
+    }
 }
