@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ЖДТУ</string>
+    <string name="error_load_news_from_network">Помилка отримання даних від сервера</string>
+</resources>

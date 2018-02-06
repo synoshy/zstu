@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ЖГТУ</string>
+    <string name="error_load_news_from_network">Ошибка получения данных от сервера</string>
+</resources>
