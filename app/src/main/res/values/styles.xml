@@ -1,8 +1,6 @@
 <resources>
-
     <style name="AppTheme" parent="Base.Theme.AppCompat">
         <item name="android:background">@drawable/background_theme</item>
         <item name="windowNoTitle">true</item>
     </style>
-
 </resources>

@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="zstu_yellow">#e4c01a</color>
     <color name="zstu_blue">#083446</color>
+    <color name="ic_launcher_background">#29649E</color>
     <color name="transparent">#00000000</color>
     <color name="background_fade">#be000000</color>
     <color name="row_article_heading">#bfab4a</color>

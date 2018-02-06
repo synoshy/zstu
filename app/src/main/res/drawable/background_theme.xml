@@ -7,6 +7,6 @@
                 android:endColor="@color/background_gradient_end"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/background"
+    <item android:drawable="@drawable/background_logo"
         android:gravity="center" />
 </layer-list>
