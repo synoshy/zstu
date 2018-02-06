@@ -14,8 +14,9 @@
         android:alpha="@dimen/row_feed_alpha"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
-        app:cardBackgroundColor="@color/row_article_background"
-        app:cardUseCompatPadding="true">
+        app:cardBackgroundColor="@color/row_feed_background"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="@dimen/row_feed_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
                 android:text="@{model.article.heading}"
-                android:textColor="@color/row_article_heading"
+                android:textColor="@color/row_feed_heading"
                 android:textSize="@dimen/row_feed_heading" />
 
             <View
@@ -38,7 +39,7 @@
                 android:layout_height="@dimen/row_feed_line_height"
                 android:layout_marginBottom="@dimen/row_feed_line_margin"
                 android:layout_marginTop="@dimen/row_feed_line_margin"
-                android:background="@color/row_article_line" />
+                android:background="@color/row_feed_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +79,7 @@
                         android:background="@color/transparent"
                         android:text="@{model.article.description}"
                         android:textAlignment="viewStart"
-                        android:textColor="@color/row_article_content"
+                        android:textColor="@color/row_feed_content"
                         android:textSize="@dimen/row_feed_description" />
 
                     <TextView
@@ -88,7 +89,7 @@
                         android:background="@color/transparent"
                         android:gravity="end"
                         android:text="@{model.article.lastModified.toLocaleString()}"
-                        android:textColor="@color/row_article_date"
+                        android:textColor="@color/row_feed_date"
                         android:textSize="@dimen/row_feed_date" />
 
                 </LinearLayout>

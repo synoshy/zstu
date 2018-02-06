@@ -5,7 +5,7 @@
     <dimen name="text_heading">24sp</dimen>
     <dimen name="text_huge">36sp</dimen>
     <dimen name="row_feed_offset_horizontal">1dp</dimen>
-    <dimen name="row_feed_offset_vertical">10dp</dimen>
+    <dimen name="row_feed_offset_vertical">7dp</dimen>
     <dimen name="row_feed_padding">15dp</dimen>
     <dimen name="row_feed_heading">24sp</dimen>
     <dimen name="row_feed_line_height">1dp</dimen>
@@ -15,8 +15,9 @@
     <dimen name="row_feed_date_margin_top">5sp</dimen>
     <dimen name="row_feed_thumbnail_width">150dp</dimen>
     <dimen name="row_feed_thumbnail_height">100dp</dimen>
-    <dimen name="row_feed_alpha">0.82</dimen>
+    <dimen name="row_feed_alpha">0.92</dimen>
+    <dimen name="row_feed_elevation">8dp</dimen>
     <dimen name="ic_no_internet_height">80dp</dimen>
-    <dimen name="spinner_offset_start">-10dp</dimen>
+    <dimen name="spinner_offset_start">-40dp</dimen>
     <dimen name="spinner_offset_end">10dp</dimen>
 </resources>

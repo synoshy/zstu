@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_zstu" />
+        android:src="@color/feed_background" />
 
     <LinearLayout
         android:id="@+id/info_swipe_to_update"
