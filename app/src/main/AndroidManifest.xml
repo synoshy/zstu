@@ -11,7 +11,7 @@
         android:name=".ZSTUApplication"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".presentation.activity.FeedActivity"
+        <activity android:name=".presentation.feed.FeedActivity"
             android:configChanges="orientation|screenSize">
 
             <intent-filter>

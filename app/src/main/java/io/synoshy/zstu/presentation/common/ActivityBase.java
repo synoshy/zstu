@@ -10,31 +10,16 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu;
+package io.synoshy.zstu.presentation.common;
 
-import android.app.Application;
+import android.support.v7.app.AppCompatActivity;
 
+import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.presentation.di.component.AppComponent;
-import io.synoshy.zstu.presentation.di.component.DaggerAppComponent;
-import io.synoshy.zstu.presentation.di.module.AppModule;
 
-public class ZSTUApplication extends Application {
+public class ActivityBase extends AppCompatActivity {
 
-    private AppComponent appComponent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        configureDependencies();
-    }
-
-    private void configureDependencies() {
-        appComponent = DaggerAppComponent.builder()
-            .appModule(new AppModule(this))
-            .build();
-    }
-
-    public AppComponent getAppComponent() {
-        return appComponent;
+    protected AppComponent getAppComponent() {
+        return ((ZSTUApplication)getApplication()).getAppComponent();
     }
 }
