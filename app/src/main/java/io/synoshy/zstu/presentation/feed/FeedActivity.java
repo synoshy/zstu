@@ -94,14 +94,19 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
         feedList.setAdapter(feedListAdapter);
         feedList.addItemDecoration(new OffsetDecoration(horizontalRowOffset, verticalRowOffset));
 
-        feedViewModel.getArticles().observe(this, x -> {
-            feedListAdapter.mergeChanges(x);
-            feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
-        });
-
         swipeRefreshLayout.setColorSchemeResources(R.color.zstu_blue, R.color.zstu_yellow);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(true, startSpinnerOffset, endSpinnerOffset);
+
+        swipeRefreshLayout.setRefreshing(true);
+        feedViewModel.updateData(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+
+            feedViewModel.getArticles().observe(this, x -> {
+                feedListAdapter.mergeChanges(x);
+                feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
+            });
+        });
     }
 
     @Override
