@@ -9,10 +9,42 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background_zstu" />
 
+    <LinearLayout
+        android:id="@+id/info_swipe_to_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/transparent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/row_feed_padding"
+        android:paddingRight="@dimen/row_feed_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent"
+            android:scaleType="center"
+            android:src="@drawable/ic_globe"
+            android:tint="@color/no_connection" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:text="@string/no_connection"
+            android:textColor="@color/no_connection"
+            android:textSize="@dimen/text_large" />
+
+    </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="top|center_horizontal"
         android:background="@color/transparent">
 
         <android.support.v7.widget.RecyclerView

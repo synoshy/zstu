@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:name=".ZSTUApplication"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Launcher">
 
         <activity android:name=".presentation.feed.FeedActivity"
             android:configChanges="orientation|screenSize">

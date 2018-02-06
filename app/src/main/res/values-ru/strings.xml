@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ЖГТУ</string>
     <string name="error_load_news_from_network">Ошибка получения данных от сервера</string>
+    <string name="no_connection">Невозможно загрузить новости. Проверьте подключение к Интернету.</string>
 </resources>

@@ -15,6 +15,7 @@ package io.synoshy.zstu.presentation.feed;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,8 +40,11 @@ public class FeedViewModel extends AndroidViewModel {
 
     private LiveData<List<Article>> articles;
 
+    private MutableLiveData<Boolean> showNoPostsMessage;
+
     public FeedViewModel(@NonNull Application application) {
         super(application);
+        showNoPostsMessage = new MutableLiveData<>();
     }
 
     public void initialize() {
@@ -50,6 +54,10 @@ public class FeedViewModel extends AndroidViewModel {
 
     public LiveData<List<Article>> getArticles() {
         return articles;
+    }
+
+    public MutableLiveData<Boolean> getShowNoPostsMessage() {
+        return showNoPostsMessage;
     }
 
     public void updateData(@Nullable Runnable callback) {

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ZSTU</string>
     <string name="error_load_news_from_network">Error loading news from the server</string>
+    <string name="no_connection">Error loading news. Check your network status.</string>
 </resources>

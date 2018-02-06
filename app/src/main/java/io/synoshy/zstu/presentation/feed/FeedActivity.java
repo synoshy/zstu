@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2018 Denys Zosimovych Open Source Project
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +43,20 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     @BindView(R.id.feed_list)
     RecyclerView feedList;
 
+    @BindView(R.id.info_swipe_to_update)
+    View swipeToUpdateInfo;
+
     @BindDimen(R.dimen.row_feed_offset_horizontal)
     int horizontalRowOffset;
 
     @BindDimen(R.dimen.row_feed_offset_vertical)
     int verticalRowOffset;
+
+    @BindDimen(R.dimen.spinner_offset_start)
+    int startSpinnerOffset;
+
+    @BindDimen(R.dimen.spinner_offset_end)
+    int endSpinnerOffset;
 
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -70,6 +80,8 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
 
     private void initialize() {
         feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
+        feedViewModel.getShowNoPostsMessage().observe(this,
+                x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
         feedViewModel.initialize();
 
         List<Article> articles = feedViewModel.getArticles().getValue();
@@ -77,14 +89,19 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
             articles = new ArrayList<>();
 
         feedListAdapter = new FeedListAdapter(articles);
+
         feedList.setLayoutManager(new LinearLayoutManager(this));
         feedList.setAdapter(feedListAdapter);
         feedList.addItemDecoration(new OffsetDecoration(horizontalRowOffset, verticalRowOffset));
 
-        feedViewModel.getArticles().observe(this, x -> feedListAdapter.mergeChanges(x));
+        feedViewModel.getArticles().observe(this, x -> {
+            feedListAdapter.mergeChanges(x);
+            feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
+        });
 
         swipeRefreshLayout.setColorSchemeResources(R.color.zstu_blue, R.color.zstu_yellow);
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(true, startSpinnerOffset, endSpinnerOffset);
     }
 
     @Override
