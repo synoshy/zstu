@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="row_article_offset_horizontal">5dp</dimen>
-    <dimen name="row_article_offset_vertical">10dp</dimen>
-    <dimen name="row_article_padding">15dp</dimen>
-    <dimen name="row_article_heading">24sp</dimen>
-    <dimen name="row_article_line_height">1dp</dimen>
-    <dimen name="row_article_line_margin">15dp</dimen>
-    <dimen name="row_article_description">14sp</dimen>
-    <dimen name="row_article_date">8sp</dimen>
-    <dimen name="row_article_date_margin_top">5sp</dimen>
-    <dimen name="row_article_thumbnail_width">150dp</dimen>
-    <dimen name="row_article_thumbnail_height">100dp</dimen>
-    <dimen name="row_article_alpha">0.82</dimen>
+    <dimen name="row_feed_offset_horizontal">1dp</dimen>
+    <dimen name="row_feed_offset_vertical">10dp</dimen>
+    <dimen name="row_feed_padding">15dp</dimen>
+    <dimen name="row_feed_heading">24sp</dimen>
+    <dimen name="row_feed_line_height">1dp</dimen>
+    <dimen name="row_feed_line_margin">15dp</dimen>
+    <dimen name="row_feed_description">14sp</dimen>
+    <dimen name="row_feed_date">8sp</dimen>
+    <dimen name="row_feed_date_margin_top">5sp</dimen>
+    <dimen name="row_feed_thumbnail_width">150dp</dimen>
+    <dimen name="row_feed_thumbnail_height">100dp</dimen>
+    <dimen name="row_feed_alpha">0.82</dimen>
 </resources>

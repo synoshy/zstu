@@ -42,10 +42,10 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     @BindView(R.id.feed_list)
     RecyclerView feedList;
 
-    @BindDimen(R.dimen.row_article_offset_horizontal)
+    @BindDimen(R.dimen.row_feed_offset_horizontal)
     int horizontalRowOffset;
 
-    @BindDimen(R.dimen.row_article_offset_vertical)
+    @BindDimen(R.dimen.row_feed_offset_vertical)
     int verticalRowOffset;
 
     @BindView(R.id.swipe_refresh)

@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import io.synoshy.zstu.databinding.RowArticleBinding;
+import io.synoshy.zstu.databinding.RowFeedBinding;
 import io.synoshy.zstu.domain.article.Article;
 import io.synoshy.zstu.domain.common.util.Validator;
 
@@ -41,7 +41,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        RowArticleBinding binding = RowArticleBinding.inflate(inflater);
+        RowFeedBinding binding = RowFeedBinding.inflate(inflater);
         return new ArticleHolder(binding);
     }
 
@@ -57,14 +57,14 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
 
     class ArticleHolder extends RecyclerView.ViewHolder {
 
-        private RowArticleBinding binding;
+        private RowFeedBinding binding;
 
-        public ArticleHolder(@NonNull RowArticleBinding binding) {
+        public ArticleHolder(@NonNull RowFeedBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public RowArticleBinding getBinding() {
+        public RowFeedBinding getBinding() {
             return binding;
         }
     }

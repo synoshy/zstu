@@ -11,7 +11,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="@dimen/row_article_alpha"
+        android:alpha="@dimen/row_feed_alpha"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
         app:cardBackgroundColor="@color/row_article_background"
@@ -23,7 +23,7 @@
             android:layout_gravity="center_vertical"
             android:background="@color/transparent"
             android:orientation="vertical"
-            android:padding="@dimen/row_article_padding">
+            android:padding="@dimen/row_feed_padding">
 
             <TextView
                 android:layout_width="match_parent"
@@ -31,13 +31,13 @@
                 android:background="@color/transparent"
                 android:text="@{model.article.heading}"
                 android:textColor="@color/row_article_heading"
-                android:textSize="@dimen/row_article_heading" />
+                android:textSize="@dimen/row_feed_heading" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/row_article_line_height"
-                android:layout_marginBottom="@dimen/row_article_line_margin"
-                android:layout_marginTop="@dimen/row_article_line_margin"
+                android:layout_height="@dimen/row_feed_line_height"
+                android:layout_marginBottom="@dimen/row_feed_line_margin"
+                android:layout_marginTop="@dimen/row_feed_line_margin"
                 android:background="@color/row_article_line" />
 
             <LinearLayout
@@ -46,11 +46,11 @@
                 android:background="@color/transparent">
 
                 <FrameLayout
-                    android:layout_width="@dimen/row_article_thumbnail_width"
-                    android:layout_height="@dimen/row_article_thumbnail_height"
+                    android:layout_width="@dimen/row_feed_thumbnail_width"
+                    android:layout_height="@dimen/row_feed_thumbnail_height"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/row_article_offset_horizontal"
-                    android:layout_marginRight="@dimen/row_article_offset_horizontal"
+                    android:layout_marginLeft="@dimen/row_feed_offset_horizontal"
+                    android:layout_marginRight="@dimen/row_feed_offset_horizontal"
                     android:background="@color/transparent"
                     android:visibility="@{model.imageVisibility}">
 
@@ -79,17 +79,17 @@
                         android:text="@{model.article.description}"
                         android:textAlignment="viewStart"
                         android:textColor="@color/row_article_content"
-                        android:textSize="@dimen/row_article_description" />
+                        android:textSize="@dimen/row_feed_description" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/row_article_date_margin_top"
+                        android:layout_marginTop="@dimen/row_feed_date_margin_top"
                         android:background="@color/transparent"
                         android:gravity="end"
                         android:text="@{model.article.lastModified.toLocaleString()}"
                         android:textColor="@color/row_article_date"
-                        android:textSize="@dimen/row_article_date" />
+                        android:textSize="@dimen/row_feed_date" />
 
                 </LinearLayout>
 
