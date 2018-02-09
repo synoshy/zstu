@@ -40,14 +40,16 @@ public class FeedViewModel extends AndroidViewModel {
 
     private LiveData<List<Article>> articles;
 
-    private MutableLiveData<Boolean> showNoPostsMessage;
+    private MutableLiveData<Boolean> showNoPostsMessage = new MutableLiveData<>();
+
+    private boolean wasInitializedBefore = false;
 
     public FeedViewModel(@NonNull Application application) {
         super(application);
-        showNoPostsMessage = new MutableLiveData<>();
+        initialize();
     }
 
-    public void initialize() {
+    private void initialize() {
         ((ZSTUApplication)getApplication()).getAppComponent().inject(this);
         articles = articleManager.getList();
     }
@@ -83,5 +85,13 @@ public class FeedViewModel extends AndroidViewModel {
 
             return null;
         });
+    }
+
+    public boolean getWasInitializedBefore() {
+        return wasInitializedBefore;
+    }
+
+    public void setWasInitializedBefore(boolean initialized) {
+        wasInitializedBefore = initialized;
     }
 }

@@ -9,6 +9,7 @@
     <color name="transparent">#00000000</color>
     <color name="background_fade_dark">#a8000000</color>
     <color name="background_fade_light">#41ffffff</color>
+    <color name="status_bar">#00000000</color>
     <color name="row_feed_heading">#bfab4a</color>
     <color name="row_feed_content">#bfab4a</color>
     <color name="row_feed_line">#bfab4a</color>

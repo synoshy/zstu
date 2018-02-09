@@ -14,8 +14,11 @@ package io.synoshy.zstu.presentation.feed;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +38,7 @@ import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.presentation.common.ActivityBase;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
 
-public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener {
+public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     @Inject
     ArticleManager articleManager;
@@ -45,6 +48,13 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
 
     @BindView(R.id.info_swipe_to_update)
     View swipeToUpdateInfo;
+
+    @BindView(R.id.btn_menu)
+    FloatingActionButton menuButton;
+
+    AnimatedVectorDrawableCompat menuToCloseIcon;
+
+    AnimatedVectorDrawableCompat closeToMenuIcon;
 
     @BindDimen(R.dimen.row_feed_offset_horizontal)
     int horizontalRowOffset;
@@ -80,9 +90,16 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
 
     private void initialize() {
         feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
-        feedViewModel.getShowNoPostsMessage().observe(this,
-                x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
-        feedViewModel.initialize();
+        if (!feedViewModel.getWasInitializedBefore()) {
+            feedViewModel.getShowNoPostsMessage().observe(this,
+                    x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
+        }
+
+        menuToCloseIcon = AnimatedVectorDrawableCompat.create(getApplicationContext(), R.drawable.anim_menu_close);
+        closeToMenuIcon = AnimatedVectorDrawableCompat.create(getApplicationContext(), R.drawable.anim_close_menu);
+
+        menuButton.setImageDrawable(menuToCloseIcon);
+        menuButton.setOnClickListener(this);
 
         List<Article> articles = feedViewModel.getArticles().getValue();
         if (articles == null)
@@ -98,15 +115,18 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(true, startSpinnerOffset, endSpinnerOffset);
 
-        swipeRefreshLayout.setRefreshing(true);
-        feedViewModel.updateData(() -> {
-            swipeRefreshLayout.setRefreshing(false);
-
-            feedViewModel.getArticles().observe(this, x -> {
-                feedListAdapter.mergeChanges(x);
-                feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
+        if (!feedViewModel.getWasInitializedBefore()) {
+            swipeRefreshLayout.setRefreshing(true);
+            feedViewModel.updateData(() -> {
+                swipeRefreshLayout.setRefreshing(false);
+                feedViewModel.getArticles().observe(this, x -> {
+                    feedListAdapter.mergeChanges(x);
+                    feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
+                });
             });
-        });
+
+            feedViewModel.setWasInitializedBefore(true);
+        }
     }
 
     @Override
@@ -118,5 +138,17 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         feedListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClick(View view) {
+        Drawable drawable = menuButton.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawableCompat) {
+            AnimatedVectorDrawableCompat anim = (AnimatedVectorDrawableCompat) drawable;
+            if (!anim.isRunning()) {
+                anim.start();
+                view.setClickable(false);
+            }
+        }
     }
 }

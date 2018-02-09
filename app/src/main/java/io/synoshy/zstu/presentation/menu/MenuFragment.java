@@ -13,64 +13,72 @@
 package io.synoshy.zstu.presentation.menu;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import javax.inject.Inject;
 
 import butterknife.BindColor;
-import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
-import io.synoshy.zstu.databinding.ActivityMenuBinding;
-import io.synoshy.zstu.presentation.common.ActivityBase;
+import io.synoshy.zstu.databinding.FragmentMenuBinding;
+import io.synoshy.zstu.presentation.common.FragmentBase;
+import io.synoshy.zstu.presentation.common.viewmodel.InjectableViewModelFactory;
+import io.synoshy.zstu.presentation.common.util.AppCompatNavigator;
 import io.synoshy.zstu.presentation.common.util.ViewUtil;
 
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
-public class MenuActivity extends ActivityBase {
+public class MenuFragment extends FragmentBase {
 
-    @BindColor(R.color.menu_item_background)
-    int menuItemBackgroundColor;
+    private static final float LANDSCAPE_MENU_ITEM_SIZE_MULTIPLIER = .25f;
+    private static final float PORTRAIT_MENU_ITEM_SIZE_MULTIPLIER = .375f;
 
-    @BindColor(R.color.menu_item_background_pressed)
-    int menuItemBackgroundPressedColor;
+    @Inject
+    InjectableViewModelFactory viewModelFactory;
 
     @BindColor(R.color.menu_item_text)
     int menuItemTextColor;
 
-    @BindColor(R.color.menu_item_border)
-    int menuItemBorder;
-
-    @BindDimen(R.dimen.menu_item_border)
-    int menuItemBorderWidth;
-
     private MenuViewModel menuViewModel;
 
-    private ActivityMenuBinding binding;
+    private FragmentMenuBinding binding;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu, container, false);
+        View view = binding.getRoot();
+        ButterKnife.bind(this, view);
+
+        return view;
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+        getAppComponent().inject(this);
         initialize();
     }
 
     private void initialize() {
-        menuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
-        if (!menuViewModel.isInitialized()) {
-            Drawable hexagon = new HexagonDrawable(menuItemBackgroundColor, menuItemBorder,
-                    menuItemBorderWidth);
-            Drawable pressedHexagon = new HexagonDrawable(menuItemBackgroundPressedColor,
-                    menuItemBorder, menuItemBorderWidth);
-            menuViewModel.initialize(hexagon, pressedHexagon);
-        }
+        menuViewModel = ViewModelProviders.of(this, viewModelFactory).get(MenuViewModel.class);
+        menuViewModel.setItemOnClickHandler("News", x -> {
+            Intent i = new Intent(getContext(), AppCompatNavigator.getActivity("News"));
+            getActivity().startActivity(i);
+            getActivity().overridePendingTransition(R.anim.zoom_out, R.anim.zoom_in);
+            return null;
+        });
 
         menuViewModel.updateItemSizes(calculateMenuItemSize(ViewUtil.getOrientation(), ViewUtil.getDeviceWidth()));
         menuViewModel.updateItemTextColors(menuItemTextColor);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_menu);
         binding.setModel(menuViewModel);
     }
 
@@ -78,11 +86,11 @@ public class MenuActivity extends ActivityBase {
         float widthMultiplier;
         switch (orientation) {
             case ORIENTATION_LANDSCAPE: {
-                widthMultiplier = .25f;
+                widthMultiplier = LANDSCAPE_MENU_ITEM_SIZE_MULTIPLIER;
                 break;
             }
             case ORIENTATION_PORTRAIT: {
-                widthMultiplier = .375f;
+                widthMultiplier = PORTRAIT_MENU_ITEM_SIZE_MULTIPLIER;
                 break;
             }
             default:

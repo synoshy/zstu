@@ -14,9 +14,11 @@ package io.synoshy.zstu;
 
 import android.app.Application;
 
+import io.synoshy.zstu.presentation.common.util.AppCompatNavigator;
 import io.synoshy.zstu.presentation.di.component.AppComponent;
 import io.synoshy.zstu.presentation.di.component.DaggerAppComponent;
 import io.synoshy.zstu.presentation.di.module.AppModule;
+import io.synoshy.zstu.presentation.feed.FeedActivity;
 
 public class ZSTUApplication extends Application {
 
@@ -26,6 +28,7 @@ public class ZSTUApplication extends Application {
     public void onCreate() {
         super.onCreate();
         configureDependencies();
+        configureNavigator();
     }
 
     private void configureDependencies() {
@@ -36,5 +39,9 @@ public class ZSTUApplication extends Application {
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    private void configureNavigator() {
+        AppCompatNavigator.addActivity("News", FeedActivity.class);
     }
 }

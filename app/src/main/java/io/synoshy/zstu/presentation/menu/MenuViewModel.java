@@ -12,28 +12,50 @@
 
 package io.synoshy.zstu.presentation.menu;
 
-import android.arch.lifecycle.ViewModel;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.view.View;
+
+import com.annimon.stream.function.Function;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.synoshy.zstu.domain.common.util.Validator;
 
-public class MenuViewModel extends ViewModel {
+public class MenuViewModel extends AndroidViewModel {
+
+//    @BindColor(R.color.menu_item_background)
+    int menuItemBackgroundColor;
+
+//    @BindColor(R.color.menu_item_background_pressed)
+    int menuItemBackgroundPressedColor;
+
+//    @BindColor(R.color.menu_item_border)
+    int menuItemBorder;
+
+//    @BindDimen(R.dimen.menu_item_border)
+    int menuItemBorderWidth;
 
     private Map<String, MenuItem> menuItems;
 
-    public Map<String, MenuItem> getMenuItems() {
-        return menuItems;
+    public MenuViewModel(@NonNull Application application) {
+        super(application);
+        initialize();
     }
 
-    public void initialize(@NonNull Drawable itemBackground, @Nullable Drawable itemPressedBackground) {
+    private void initialize() {
         menuItems = new HashMap<>();
-        initializeMenuItems(itemBackground, itemPressedBackground);
+
+        Drawable hexagon = new HexagonDrawable(menuItemBackgroundColor, menuItemBorder,
+                menuItemBorderWidth);
+        Drawable pressedHexagon = new HexagonDrawable(menuItemBackgroundPressedColor,
+                menuItemBorder, menuItemBorderWidth);
+
+        initializeMenuItems(hexagon, pressedHexagon);
     }
 
     private void initializeMenuItems(Drawable itemBackground, Drawable itemPressedBackground) {
@@ -54,6 +76,10 @@ public class MenuViewModel extends ViewModel {
         return menuItems != null;
     }
 
+    public Map<String, MenuItem> getMenuItems() {
+        return menuItems;
+    }
+
     public void updateItemSizes(int itemSize) {
         Validator.throwIf(!isInitialized(), "View model is not initialized.");
 
@@ -66,5 +92,11 @@ public class MenuViewModel extends ViewModel {
 
         for (MenuItem item : menuItems.values())
             item.setTextColor(itemTextColor);
+    }
+
+    public void setItemOnClickHandler(@NonNull String itemName, @NonNull Function<View, Void> handler) {
+        Validator.throwIf(!menuItems.containsKey(itemName), "There is no item with such name.");
+
+        menuItems.get(itemName).setOnClickHandler(handler);
     }
 }

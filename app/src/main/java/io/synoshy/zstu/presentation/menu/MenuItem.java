@@ -15,12 +15,15 @@ package io.synoshy.zstu.presentation.menu;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.view.MotionEvent;
 import android.view.View;
 
-public class MenuItem implements View.OnTouchListener {
+import com.annimon.stream.function.Function;
+
+public class MenuItem implements View.OnClickListener {
 
     public final String Name;
+
+    private Function<View, Void> onClickHandler;
 
     private Drawable background;
 
@@ -73,18 +76,12 @@ public class MenuItem implements View.OnTouchListener {
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        switch (motionEvent.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                view.getBackground().setState(new int[]{android.R.attr.state_pressed});
-                return true;
+    public void onClick(View view) {
+        if (onClickHandler != null)
+            onClickHandler.apply(view);
+    }
 
-            case MotionEvent.ACTION_UP:
-                view.getBackground().setState(new int[]{-android.R.attr.state_pressed});
-                view.performClick();
-                return true;
-        }
-
-        return false;
+    public void setOnClickHandler(@NonNull Function<View, Void> onClickHandler) {
+        this.onClickHandler = onClickHandler;
     }
 }
