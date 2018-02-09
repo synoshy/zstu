@@ -22,13 +22,23 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import io.synoshy.zstu.presentation.common.util.ViewUtil;
+
 public class HexagonDrawable extends Drawable {
 
     private final int VERTEXES = 6;
 
+    private static final int DEFAULT_BORDER_COLOR = Color.TRANSPARENT;
+
+    private static final int DEFAULT_BORDER_WIDTH = ViewUtil.dpToPx(2f);
+
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+    private Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
     private Path path = new Path();
+
+    private Path borderPath = new Path();
 
     private Path updateHexagonPath(@NonNull Rect rect) {
         int width = rect.width();
@@ -61,19 +71,33 @@ public class HexagonDrawable extends Drawable {
     }
 
     public HexagonDrawable(int color) {
+        this(color, DEFAULT_BORDER_COLOR, DEFAULT_BORDER_WIDTH);
+    }
+
+    public HexagonDrawable(int color, int borderColor) {
+        this(color, borderColor, DEFAULT_BORDER_WIDTH);
+    }
+
+    public HexagonDrawable(int color, int borderColor, int borderWidth) {
         paint.setColor(color);
+        borderPaint.setColor(borderColor);
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setStrokeWidth(borderWidth);
     }
 
     @Override
     protected void onBoundsChange(Rect bounds) {
         super.onBoundsChange(bounds);
         path = updateHexagonPath(bounds);
+        borderPath = new Path(path);
+        borderPath.setFillType(Path.FillType.EVEN_ODD);
         invalidateSelf();
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
         canvas.drawPath(path, paint);
+        canvas.drawPath(borderPath, borderPaint);
     }
 
     @Override

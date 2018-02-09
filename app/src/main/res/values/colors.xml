@@ -20,6 +20,7 @@
     <color name="no_connection">#e39e7214</color>
     <color name="menu_background">#dedede</color>
     <color name="menu_item_text">#dedede</color>
+    <color name="menu_item_border">#dedede</color>
     <color name="menu_item_background">#00619e</color>
     <color name="menu_item_background_pressed">#005387</color>
 </resources>

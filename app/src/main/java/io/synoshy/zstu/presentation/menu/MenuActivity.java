@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import butterknife.BindColor;
+import butterknife.BindDimen;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.databinding.ActivityMenuBinding;
@@ -39,6 +40,12 @@ public class MenuActivity extends ActivityBase {
     @BindColor(R.color.menu_item_text)
     int menuItemTextColor;
 
+    @BindColor(R.color.menu_item_border)
+    int menuItemBorder;
+
+    @BindDimen(R.dimen.menu_item_border)
+    int menuItemBorderWidth;
+
     private MenuViewModel menuViewModel;
 
     private ActivityMenuBinding binding;
@@ -53,9 +60,11 @@ public class MenuActivity extends ActivityBase {
     private void initialize() {
         menuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         if (!menuViewModel.isInitialized()) {
-            Drawable hexagon = new HexagonDrawable(menuItemBackgroundColor);
-            Drawable scaledHexagon = new HexagonDrawable(menuItemBackgroundPressedColor);
-            menuViewModel.initialize(hexagon, scaledHexagon);
+            Drawable hexagon = new HexagonDrawable(menuItemBackgroundColor, menuItemBorder,
+                    menuItemBorderWidth);
+            Drawable pressedHexagon = new HexagonDrawable(menuItemBackgroundPressedColor,
+                    menuItemBorder, menuItemBorderWidth);
+            menuViewModel.initialize(hexagon, pressedHexagon);
         }
 
         menuViewModel.updateItemSizes(calculateMenuItemSize(ViewUtil.getOrientation(), ViewUtil.getDeviceWidth()));

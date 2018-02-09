@@ -13,6 +13,7 @@
 package io.synoshy.zstu.presentation.common.util;
 
 import android.content.res.Resources;
+import android.util.TypedValue;
 
 public class ViewUtil {
 
@@ -28,5 +29,13 @@ public class ViewUtil {
      */
     public static int getOrientation() {
         return Resources.getSystem().getConfiguration().orientation;
+    }
+
+    /**
+     * Convert dimen in <b>DP</b> to <b>PX</b>.
+     */
+    public static int dpToPx(float value) {
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,
+                Resources.getSystem().getDisplayMetrics());
     }
 }

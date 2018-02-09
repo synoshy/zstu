@@ -21,4 +21,5 @@
     <dimen name="spinner_offset_start">-40dp</dimen>
     <dimen name="spinner_offset_end">10dp</dimen>
     <dimen name="menu_item_text">16sp</dimen>
+    <dimen name="menu_item_border">3dp</dimen>
 </resources>
