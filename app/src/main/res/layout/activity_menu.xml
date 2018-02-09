@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="io.synoshy.zstu.presentation.menu.MenuItem" />
+        <import type="java.util.Map" />
+
+        <variable
+            name="model"
+            type="io.synoshy.zstu.presentation.menu.MenuViewModel" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hexagons" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:theme="@style/AppTheme">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:theme="@style/AppTheme">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@{model.menuItems.get(&quot;News&quot;).spacing}"
+                    android:paddingRight="@{model.menuItems.get(&quot;News&quot;).spacing}"
+                    android:theme="@style/AppTheme">
+
+                    <Button
+                        android:id="@+id/news"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:width="@{model.menuItems.get(&quot;News&quot;).size}"
+                        android:height="@{model.menuItems.get(&quot;News&quot;).size}"
+                        android:background="@{model.menuItems.get(&quot;News&quot;).background}"
+                        android:text="@{model.menuItems.get(&quot;News&quot;).text}"
+                        android:textColor="@{model.menuItems.get(&quot;News&quot;).textColor}"
+                        android:textSize="@dimen/menu_item_text" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@{model.menuItems.get(&quot;Schedule&quot;).spacing}"
+                    android:paddingRight="@{model.menuItems.get(&quot;Schedule&quot;).spacing}"
+                    android:theme="@style/AppTheme">
+
+                    <Button
+                        android:id="@+id/schedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:width="@{model.menuItems.get(&quot;Schedule&quot;).size}"
+                        android:height="@{model.menuItems.get(&quot;Schedule&quot;).size}"
+                        android:background="@{model.menuItems.get(&quot;Schedule&quot;).background}"
+                        android:text="@{model.menuItems.get(&quot;Schedule&quot;).text}"
+                        android:textColor="@{model.menuItems.get(&quot;Schedule&quot;).textColor}"
+                        android:textSize="@dimen/menu_item_text" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="@{model.menuItems.get(&quot;Teachers&quot;).spacing}"
+                android:paddingRight="@{model.menuItems.get(&quot;Teachers&quot;).spacing}"
+                android:theme="@style/AppTheme">
+
+                <Button
+                    android:id="@+id/teachers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="10dp"
+                    android:width="@{model.menuItems.get(&quot;Teachers&quot;).size}"
+                    android:height="@{model.menuItems.get(&quot;Teachers&quot;).size}"
+                    android:background="@{model.menuItems.get(&quot;Teachers&quot;).background}"
+                    android:text="@{model.menuItems.get(&quot;Teachers&quot;).text}"
+                    android:textColor="@{model.menuItems.get(&quot;Teachers&quot;).textColor}"
+                    android:textSize="@dimen/menu_item_text" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:theme="@style/AppTheme">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@{model.menuItems.get(&quot;Accounts&quot;).spacing}"
+                    android:paddingRight="@{model.menuItems.get(&quot;Accounts&quot;).spacing}"
+                    android:theme="@style/AppTheme">
+
+                    <Button
+                        android:id="@+id/accounts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:width="@{model.menuItems.get(&quot;Accounts&quot;).size}"
+                        android:height="@{model.menuItems.get(&quot;Accounts&quot;).size}"
+                        android:background="@{model.menuItems.get(&quot;Accounts&quot;).background}"
+                        android:text="@{model.menuItems.get(&quot;Accounts&quot;).text}"
+                        android:textColor="@{model.menuItems.get(&quot;Accounts&quot;).textColor}"
+                        android:textSize="@dimen/menu_item_text" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@{model.menuItems.get(&quot;Group chat&quot;).spacing}"
+                    android:paddingRight="@{model.menuItems.get(&quot;Group chat&quot;).spacing}"
+                    android:theme="@style/AppTheme">
+
+                    <Button
+                        android:id="@+id/group_chat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:width="@{model.menuItems.get(&quot;Group chat&quot;).size}"
+                        android:height="@{model.menuItems.get(&quot;Group chat&quot;).size}"
+                        android:background="@{model.menuItems.get(&quot;Group chat&quot;).background}"
+                        android:text="@{model.menuItems.get(&quot;Group chat&quot;).text}"
+                        android:textColor="@{model.menuItems.get(&quot;Group chat&quot;).textColor}"
+                        android:textSize="@dimen/menu_item_text" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>

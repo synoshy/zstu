@@ -7,7 +7,8 @@
     <color name="zstu_blue">#083446</color>
     <color name="ic_launcher_background">#29649E</color>
     <color name="transparent">#00000000</color>
-    <color name="background_fade">#be000000</color>
+    <color name="background_fade_dark">#a8000000</color>
+    <color name="background_fade_light">#41ffffff</color>
     <color name="row_feed_heading">#bfab4a</color>
     <color name="row_feed_content">#bfab4a</color>
     <color name="row_feed_line">#bfab4a</color>
@@ -17,4 +18,8 @@
     <color name="background_gradient_start">#00619e</color>
     <color name="background_gradient_end">#001063</color>
     <color name="no_connection">#e39e7214</color>
+    <color name="menu_background">#dedede</color>
+    <color name="menu_item_text">#dedede</color>
+    <color name="menu_item_background">#00619e</color>
+    <color name="menu_item_background_pressed">#005387</color>
 </resources>

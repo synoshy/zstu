@@ -22,4 +22,11 @@ public class ViewUtil {
     public static int getDeviceWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
+
+    /**
+     * Get device orientation.
+     */
+    public static int getOrientation() {
+        return Resources.getSystem().getConfiguration().orientation;
+    }
 }

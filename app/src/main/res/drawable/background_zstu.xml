@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/image_zstu_background" />
-    <item android:drawable="@color/background_fade" />
+    <item android:drawable="@color/background_fade_dark" />
 </layer-list>
