@@ -14,11 +14,10 @@ package io.synoshy.zstu.presentation.feed;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +29,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindDimen;
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
@@ -37,8 +37,9 @@ import io.synoshy.zstu.domain.article.Article;
 import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.presentation.common.ActivityBase;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
+import io.synoshy.zstu.presentation.menu.MenuButton;
 
-public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     ArticleManager articleManager;
@@ -50,11 +51,13 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     View swipeToUpdateInfo;
 
     @BindView(R.id.btn_menu)
-    FloatingActionButton menuButton;
+    MenuButton menuButton;
 
-    AnimatedVectorDrawableCompat menuToCloseIcon;
+    @BindDrawable(R.drawable.anim_hamburger_cross)
+    Drawable hamburgerToCrossIcon;
 
-    AnimatedVectorDrawableCompat closeToMenuIcon;
+    @BindDrawable(R.drawable.anim_cross_hamburger)
+    Drawable crossToHamburgerIcon;
 
     @BindDimen(R.dimen.row_feed_offset_horizontal)
     int horizontalRowOffset;
@@ -95,11 +98,8 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
                     x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
         }
 
-        menuToCloseIcon = AnimatedVectorDrawableCompat.create(getApplicationContext(), R.drawable.anim_menu_close);
-        closeToMenuIcon = AnimatedVectorDrawableCompat.create(getApplicationContext(), R.drawable.anim_close_menu);
-
-        menuButton.setImageDrawable(menuToCloseIcon);
-        menuButton.setOnClickListener(this);
+        menuButton.initialize((AnimatedVectorDrawable)hamburgerToCrossIcon,
+                              (AnimatedVectorDrawable)crossToHamburgerIcon);
 
         List<Article> articles = feedViewModel.getArticles().getValue();
         if (articles == null)
@@ -138,17 +138,5 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         feedListAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onClick(View view) {
-        Drawable drawable = menuButton.getDrawable();
-        if (drawable instanceof AnimatedVectorDrawableCompat) {
-            AnimatedVectorDrawableCompat anim = (AnimatedVectorDrawableCompat) drawable;
-            if (!anim.isRunning()) {
-                anim.start();
-                view.setClickable(false);
-            }
-        }
     }
 }

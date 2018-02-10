@@ -9,23 +9,27 @@
             android:height="24dp"
             android:viewportWidth="24"
             android:viewportHeight="24">
-            <path
-                android:name="path_1"
-                android:pathData="M 3 6 L 21 6 L 21 8 L 3 8 L 3 6"
-                android:fillColor="#000000"
-                android:strokeAlpha="0"/>
-            <path
-                android:name="path"
-                android:pathData="M 3 12 L 21 12"
-                android:fillAlpha="0"
-                android:strokeColor="#000000"
-                android:strokeWidth="2"
-                android:trimPathStart="1"/>
-            <path
-                android:name="path_2"
-                android:pathData="M 3 16 L 21 16 L 21 18 L 3 18 L 3 16"
-                android:fillColor="#000000"
-                android:strokeAlpha="0"/>
+            <group android:name="group">
+                <group android:name="vector_1">
+                    <path
+                        android:name="path_1"
+                        android:pathData="M 5 17.5 L 17.5 5 L 19 6.5 L 6.5 19 L 5 17.5"
+                        android:fillColor="#000000"
+                        android:strokeAlpha="0"/>
+                    <path
+                        android:name="path"
+                        android:pathData="M 3 12 L 21 12"
+                        android:fillAlpha="0"
+                        android:strokeColor="#000000"
+                        android:strokeWidth="2"
+                        android:trimPathStart="1"/>
+                    <path
+                        android:name="path_2"
+                        android:pathData="M 6.5 5 L 19 17.5 L 17.5 19 L 5 6.5 L 6.5 5"
+                        android:fillColor="#000000"
+                        android:strokeAlpha="0"/>
+                </group>
+            </group>
         </vector>
     </aapt:attr>
     <target android:name="path_1">
@@ -36,7 +40,7 @@
                 android:valueFrom="M 5 17.5 L 17.5 5 L 19 6.5 L 6.5 19 L 5 17.5"
                 android:valueTo="M 3 6 L 21 6 L 21 8 L 3 8 L 3 6"
                 android:valueType="pathType"
-                android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
         </aapt:attr>
     </target>
     <target android:name="path_2">
@@ -47,18 +51,17 @@
                 android:valueFrom="M 6.5 5 L 19 17.5 L 17.5 19 L 5 6.5 L 6.5 5"
                 android:valueTo="M 3 16 L 21 16 L 21 18 L 3 18 L 3 16"
                 android:valueType="pathType"
-                android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
+                android:interpolator="@android:interpolator/fast_out_slow_in"/>
         </aapt:attr>
     </target>
     <target android:name="path">
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="trimPathStart"
-                android:startOffset="150"
-                android:duration="150"
+                android:startOffset="100"
+                android:duration="200"
                 android:valueFrom="1"
                 android:valueTo="0"
-                android:valueType="floatType"
                 android:interpolator="@android:interpolator/fast_out_slow_in"/>
         </aapt:attr>
     </target>
