@@ -2,17 +2,19 @@
     package="io.synoshy.zstu">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
+        android:name=".ZSTUApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:name=".ZSTUApplication"
         android:theme="@style/AppTheme.Launcher">
 
-        <activity android:name=".presentation.feed.FeedActivity"
-            android:configChanges="screenSize">
+        <activity
+            android:name=".presentation.feed.FeedActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="sensor">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

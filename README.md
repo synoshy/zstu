@@ -23,6 +23,7 @@ When IDE is installed, please install Android SDK with API 21. This is the least
 
 * Android Studio 3.0.1
 * Gradle 4.1
+* ShapeShifter (https://shapeshifter.design/)
 
 ## Contributing
 

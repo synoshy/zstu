@@ -17,6 +17,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.annimon.stream.function.Function;
@@ -24,36 +25,41 @@ import com.annimon.stream.function.Function;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.synoshy.zstu.R;
 import io.synoshy.zstu.domain.common.util.Validator;
 
 public class MenuViewModel extends AndroidViewModel {
 
-//    @BindColor(R.color.menu_item_background)
     int menuItemBackgroundColor;
 
-//    @BindColor(R.color.menu_item_background_pressed)
     int menuItemBackgroundPressedColor;
 
-//    @BindColor(R.color.menu_item_border)
-    int menuItemBorder;
+    int menuItemBorderColor;
 
-//    @BindDimen(R.dimen.menu_item_border)
     int menuItemBorderWidth;
 
     private Map<String, MenuItem> menuItems;
 
     public MenuViewModel(@NonNull Application application) {
         super(application);
+        loadResources();
         initialize();
+    }
+
+    private void loadResources() {
+        menuItemBackgroundColor = ContextCompat.getColor(getApplication(), R.color.menu_item_background);
+        menuItemBackgroundPressedColor = ContextCompat.getColor(getApplication(), R.color.menu_item_background_pressed);
+        menuItemBorderColor = ContextCompat.getColor(getApplication(), R.color.menu_item_border);
+        menuItemBorderWidth = (int)getApplication().getResources().getDimension(R.dimen.menu_item_border);
     }
 
     private void initialize() {
         menuItems = new HashMap<>();
 
-        Drawable hexagon = new HexagonDrawable(menuItemBackgroundColor, menuItemBorder,
+        Drawable hexagon = new HexagonDrawable(menuItemBackgroundColor, menuItemBorderColor,
                 menuItemBorderWidth);
         Drawable pressedHexagon = new HexagonDrawable(menuItemBackgroundPressedColor,
-                menuItemBorder, menuItemBorderWidth);
+                menuItemBorderColor, menuItemBorderWidth);
 
         initializeMenuItems(hexagon, pressedHexagon);
     }

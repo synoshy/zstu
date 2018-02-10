@@ -17,9 +17,8 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.view.View;
 
-public class MenuButton extends FloatingActionButton implements View.OnClickListener {
+public class MenuButton extends FloatingActionButton {
 
     private AnimatedVectorDrawable defaultStateDrawable;
 
@@ -43,6 +42,10 @@ public class MenuButton extends FloatingActionButton implements View.OnClickList
 
     //endregion
 
+    public boolean isInitialized() {
+        return defaultStateDrawable != null && invertedStateDrawable != null;
+    }
+
     public void initialize(@NonNull AnimatedVectorDrawable defaultState,
                            @NonNull AnimatedVectorDrawable invertedState)
     {
@@ -50,11 +53,9 @@ public class MenuButton extends FloatingActionButton implements View.OnClickList
         this.invertedStateDrawable = invertedState;
 
         setImageDrawable(defaultState);
-        setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
+    public void switchState() {
         AnimatedVectorDrawable drawable = isDefaultState
                 ? defaultStateDrawable
                 : invertedStateDrawable;

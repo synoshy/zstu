@@ -12,6 +12,7 @@
 
 package io.synoshy.zstu.presentation.feed;
 
+import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.graphics.drawable.AnimatedVectorDrawable;
@@ -38,8 +39,12 @@ import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.presentation.common.ActivityBase;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
 import io.synoshy.zstu.presentation.menu.MenuButton;
+import io.synoshy.zstu.presentation.menu.MenuControl;
+import io.synoshy.zstu.presentation.menu.MenuFragment;
 
-public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnRefreshListener {
+public class FeedActivity extends ActivityBase
+        implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MenuControl
+{
 
     @Inject
     ArticleManager articleManager;
@@ -78,6 +83,10 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
 
     private FeedListAdapter feedListAdapter;
 
+    private boolean isMenuShown = false;
+
+    private MenuFragment menuFragment;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +107,11 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
                     x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
         }
 
-        menuButton.initialize((AnimatedVectorDrawable)hamburgerToCrossIcon,
-                              (AnimatedVectorDrawable)crossToHamburgerIcon);
+        if (!menuButton.isInitialized()) {
+            menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
+                    (AnimatedVectorDrawable) crossToHamburgerIcon);
+            menuButton.setOnClickListener(this);
+        }
 
         List<Article> articles = feedViewModel.getArticles().getValue();
         if (articles == null)
@@ -124,7 +136,6 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
                     feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
                 });
             });
-
             feedViewModel.setWasInitializedBefore(true);
         }
     }
@@ -138,5 +149,40 @@ public class FeedActivity extends ActivityBase implements SwipeRefreshLayout.OnR
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         feedListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+    *   Menu button on click handler.
+    */
+    @Override
+    public void onClick(View view) {
+        menuButton.switchState();
+        if (!isMenuShown)
+            showMenu();
+        else
+            hideMenu();
+    }
+
+    public void showMenu() {
+        isMenuShown = true;
+
+        if (menuFragment == null)
+            menuFragment = new MenuFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(R.id.container, menuFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void hideMenu() {
+        isMenuShown = false;
+
+        getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .remove(menuFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

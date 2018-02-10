@@ -2,4 +2,5 @@
     <string name="app_name">ЖДТУ</string>
     <string name="error_load_news_from_network">Помилка отримання даних від сервера</string>
     <string name="no_connection">Неможливо завантажити новини. Перевірте підключення до Інтернету.</string>
+    <string name="in_development">В розробці...</string>
 </resources>
