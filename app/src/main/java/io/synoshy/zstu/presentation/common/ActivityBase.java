@@ -12,12 +12,21 @@
 
 package io.synoshy.zstu.presentation.common;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import io.synoshy.zstu.R;
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.presentation.di.component.AppComponent;
 
 public class ActivityBase extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
+    }
 
     protected AppComponent getAppComponent() {
         return ((ZSTUApplication)getApplication()).getAppComponent();

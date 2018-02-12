@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2018 Denys Zosimovych Open Source Project
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -93,7 +93,8 @@ public class MenuFragment extends FragmentBase {
             return null;
         });
 
-        menuViewModel.updateItemSizes(calculateMenuItemSize(ViewUtil.getOrientation(), ViewUtil.getDeviceWidth()));
+        recalculateItemSizes();
+
         menuViewModel.updateItemTextColors(menuItemTextColor);
 
         binding.setModel(menuViewModel);
@@ -114,13 +115,13 @@ public class MenuFragment extends FragmentBase {
                 throw new UnsupportedOperationException("Orientation is undefined.");
         }
 
-        return (int)(widthMultiplier * containerWidth);
+        return (int) (widthMultiplier * containerWidth);
     }
 
     private void runActivity(@NonNull Class<? extends Activity> target) {
         if (target.isInstance(getActivity())) {
             if (getActivity() instanceof MenuControl)
-                ((MenuControl)getActivity()).hideMenu();
+                ((MenuControl) getActivity()).hideMenu();
             else {
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
@@ -134,5 +135,12 @@ public class MenuFragment extends FragmentBase {
         Intent i = new Intent(getContext(), target);
         getActivity().startActivity(i);
         getActivity().overridePendingTransition(R.anim.zoom_out, R.anim.zoom_in);
+    }
+
+    public void recalculateItemSizes() {
+        if (menuViewModel != null) {
+            menuViewModel.updateItemSizes(calculateMenuItemSize(ViewUtil.getOrientation(),
+                    ViewUtil.getDeviceWidth()));
+        }
     }
 }

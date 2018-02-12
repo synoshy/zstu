@@ -14,7 +14,6 @@ package io.synoshy.zstu.presentation.feed;
 
 import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.res.Configuration;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -43,8 +42,7 @@ import io.synoshy.zstu.presentation.menu.MenuControl;
 import io.synoshy.zstu.presentation.menu.MenuFragment;
 
 public class FeedActivity extends ActivityBase
-        implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MenuControl
-{
+        implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MenuControl {
 
     @Inject
     ArticleManager articleManager;
@@ -107,11 +105,10 @@ public class FeedActivity extends ActivityBase
                     x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
         }
 
-        if (!menuButton.isInitialized()) {
-            menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
-                    (AnimatedVectorDrawable) crossToHamburgerIcon);
-            menuButton.setOnClickListener(this);
-        }
+        menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
+                (AnimatedVectorDrawable) crossToHamburgerIcon);
+        menuButton.setOnClickListener(this);
+        menuButton.resetBackground();
 
         List<Article> articles = feedViewModel.getArticles().getValue();
         if (articles == null)
@@ -145,18 +142,11 @@ public class FeedActivity extends ActivityBase
         feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        feedListAdapter.notifyDataSetChanged();
-    }
-
     /**
-    *   Menu button on click handler.
-    */
+     * Menu button on click handler.
+     */
     @Override
     public void onClick(View view) {
-        menuButton.switchState();
         if (!isMenuShown)
             showMenu();
         else
@@ -174,6 +164,8 @@ public class FeedActivity extends ActivityBase
                 .add(R.id.container, menuFragment)
                 .addToBackStack(null)
                 .commit();
+
+        menuButton.switchState();
     }
 
     public void hideMenu() {
@@ -182,7 +174,18 @@ public class FeedActivity extends ActivityBase
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .remove(menuFragment)
-                .addToBackStack(null)
                 .commit();
+        getSupportFragmentManager().popBackStack();
+
+        menuButton.switchState();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (isMenuShown) {
+            menuButton.resetBackground();
+            isMenuShown = false;
+        }
     }
 }

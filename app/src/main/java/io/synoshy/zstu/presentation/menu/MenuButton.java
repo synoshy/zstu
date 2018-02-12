@@ -42,10 +42,6 @@ public class MenuButton extends FloatingActionButton {
 
     //endregion
 
-    public boolean isInitialized() {
-        return defaultStateDrawable != null && invertedStateDrawable != null;
-    }
-
     public void initialize(@NonNull AnimatedVectorDrawable defaultState,
                            @NonNull AnimatedVectorDrawable invertedState)
     {
@@ -64,5 +60,10 @@ public class MenuButton extends FloatingActionButton {
         drawable.start();
 
         isDefaultState = !isDefaultState;
+    }
+
+    public void resetBackground() {
+        isDefaultState = false;
+        switchState();
     }
 }
