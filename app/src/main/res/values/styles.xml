@@ -2,10 +2,10 @@
 
     <style name="AppTheme" parent="Base.Theme.AppCompat">
         <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:background">@color/transparent</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
-        <item name="android:statusBarColor">@color/status_bar</item>
     </style>
 
     <style name="AppTheme.Launcher" parent="AppTheme">

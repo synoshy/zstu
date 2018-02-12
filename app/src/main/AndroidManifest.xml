@@ -11,10 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme.Launcher">
 
-        <activity
-            android:name=".presentation.feed.FeedActivity"
-            android:configChanges="screenSize|orientation"
-            android:screenOrientation="user">
+        <activity android:name=".presentation.feed.FeedActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

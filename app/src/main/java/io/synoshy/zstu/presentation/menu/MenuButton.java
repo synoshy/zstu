@@ -62,7 +62,7 @@ public class MenuButton extends FloatingActionButton {
         isDefaultState = !isDefaultState;
     }
 
-    public void resetBackground() {
+    public void resetState() {
         isDefaultState = false;
         switchState();
     }

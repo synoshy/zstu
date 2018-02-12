@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,6 +51,8 @@ public class MenuFragment extends FragmentBase {
     @BindColor(R.color.menu_item_text)
     int menuItemTextColor;
 
+    ViewGroup container;
+
     private MenuViewModel menuViewModel;
 
     private FragmentMenuBinding binding;
@@ -57,6 +60,7 @@ public class MenuFragment extends FragmentBase {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        this.container = container;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu, container, false);
         ButterKnife.bind(this, binding.getRoot());
         initialize();
@@ -93,7 +97,7 @@ public class MenuFragment extends FragmentBase {
             return null;
         });
 
-        recalculateItemSizes();
+        recalculateItemSizes(ViewUtil.getOrientation(), ViewUtil.getDeviceWidth());
 
         menuViewModel.updateItemTextColors(menuItemTextColor);
 
@@ -137,10 +141,17 @@ public class MenuFragment extends FragmentBase {
         getActivity().overridePendingTransition(R.anim.zoom_out, R.anim.zoom_in);
     }
 
-    public void recalculateItemSizes() {
-        if (menuViewModel != null) {
-            menuViewModel.updateItemSizes(calculateMenuItemSize(ViewUtil.getOrientation(),
-                    ViewUtil.getDeviceWidth()));
-        }
+    public void recalculateItemSizes(int orientation, int screenWidth) {
+        if (menuViewModel != null)
+            menuViewModel.updateItemSizes(calculateMenuItemSize(orientation, screenWidth));
+    }
+
+    @Nullable
+    @Override
+    public View getView() {
+        if (binding == null)
+            return null;
+
+        return binding.getRoot();
     }
 }
