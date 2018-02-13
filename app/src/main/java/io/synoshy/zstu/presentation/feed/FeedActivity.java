@@ -13,6 +13,7 @@
 package io.synoshy.zstu.presentation.feed;
 
 import android.app.FragmentTransaction;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
@@ -102,10 +103,20 @@ public class FeedActivity extends ActivityBase
 
     private void initialize() {
         feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
-        if (!feedViewModel.getWasInitializedBefore()) {
-            feedViewModel.getShowNoPostsMessage().observe(this,
-                    x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
-        }
+        feedViewModel.getShowNoPostsMessage().observe(this,
+                x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
+        feedViewModel.getArticles().observe(this, x -> {
+            feedListAdapter.mergeChanges(x);
+            feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
+            
+            if (!feedViewModel.getWasInitializedBefore()) {
+                swipeRefreshLayout.setRefreshing(true);
+                feedViewModel.updateData(() -> {
+                    swipeRefreshLayout.setRefreshing(false);
+                    feedViewModel.setWasInitializedBefore(true);
+                });
+            }
+        });
 
         menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
                 (AnimatedVectorDrawable) crossToHamburgerIcon);
@@ -125,18 +136,6 @@ public class FeedActivity extends ActivityBase
         swipeRefreshLayout.setColorSchemeResources(R.color.zstu_blue, R.color.zstu_yellow);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(true, startSpinnerOffset, endSpinnerOffset);
-
-        if (!feedViewModel.getWasInitializedBefore()) {
-            swipeRefreshLayout.setRefreshing(true);
-            feedViewModel.updateData(() -> {
-                swipeRefreshLayout.setRefreshing(false);
-                feedViewModel.getArticles().observe(this, x -> {
-                    feedListAdapter.mergeChanges(x);
-                    feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
-                });
-            });
-            feedViewModel.setWasInitializedBefore(true);
-        }
     }
 
     @Override
