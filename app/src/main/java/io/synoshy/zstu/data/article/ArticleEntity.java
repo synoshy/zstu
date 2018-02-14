@@ -13,16 +13,17 @@
 package io.synoshy.zstu.data.article;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.Date;
 
 import io.synoshy.zstu.domain.article.IArticle;
-import io.synoshy.zstu.domain.common.Entity;
 
-@android.arch.persistence.room.Entity(tableName = "articles",
+@Entity(tableName = "articles",
         indices = {
             @Index(name = "index_article_id", value = "id", unique = true),
             @Index(name = "index_article_search", value = {"heading", "content"})
@@ -31,7 +32,9 @@ public class ArticleEntity implements IArticle {
 
     //region Fields
 
+    @PrimaryKey
     @ColumnInfo(index = true)
+    @NonNull
     private String id;
 
     @ColumnInfo(index = true)
