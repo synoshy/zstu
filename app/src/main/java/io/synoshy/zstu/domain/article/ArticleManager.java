@@ -22,30 +22,32 @@ import java.util.List;
 import io.synoshy.zstu.domain.common.Manager;
 import okhttp3.HttpUrl;
 
-public interface ArticleManager extends Manager<Article> {
+public interface ArticleManager extends Manager<IArticle> {
 
     /**
-     * Get list of {@link Article} by heading.
+     * Get list of {@link IArticle} by heading.
      * @param heading Heading pattern.
      */
-    LiveData<List<Article>> getByHeading(@NonNull String heading);
+    LiveData<List<IArticle>> getByHeading(@NonNull String heading);
 
     /**
-     * Get list of {@link Article} that matches search query.
+     * Get list of {@link IArticle} that matches search query.
      * @param query Search pattern.
      */
-    LiveData<List<Article>> search(@NonNull String query);
+    LiveData<List<IArticle>> search(@NonNull String query);
 
     /**
-     * Get list batch of {@link Article}.
+     * Get list batch of {@link IArticle}.
      * @param batchNumber Batch number.
      * @param batchSize Batch size.
      */
-    LiveData<List<Article>> getListBatch(int batchNumber, int batchSize);
+    LiveData<List<IArticle>> getListBatch(int batchNumber, int batchSize);
 
     /**
-     * Load list of {@link Article} from network.
+     * Load list of {@link IArticle} from network to storage.
      * @param url Url to load data.
+     * @param newerThan Bottom news last modified filter.
+     * @param callback Callback that is executed after data is returned.
      */
-    void loadNewsFromNetwork(@NonNull HttpUrl url, Date newerThan, @NonNull Function<List<Article>, Void> callback);
+    void loadNewsFromNetwork(@NonNull HttpUrl url, Date newerThan, @NonNull Function<List<IArticle>, Void> callback);
 }

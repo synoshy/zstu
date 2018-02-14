@@ -10,12 +10,8 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.data.article;
+package io.synoshy.zstu.presentation.feed;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -23,24 +19,17 @@ import java.util.Date;
 
 import io.synoshy.zstu.domain.article.IArticle;
 
-@Entity(tableName = "articles",
-        indices = {
-            @Index(name = "index_article_id", value = "id", unique = true),
-            @Index(name = "index_article_search", value = {"heading", "content"})
-        })
-public class ArticleEntity implements IArticle {
+/**
+ * Class that represents a news Article.
+ */
+public class Article implements IArticle {
 
     //region Fields
 
-    @PrimaryKey
-    @ColumnInfo(index = true)
-    @NonNull
     private String id;
 
-    @ColumnInfo(index = true)
     private String heading;
 
-    @ColumnInfo(index = true)
     private String content;
 
     private String description;
@@ -55,7 +44,6 @@ public class ArticleEntity implements IArticle {
 
     //region Field accessors
 
-    @Override
     public String getId() {
         return id;
     }
@@ -116,7 +104,7 @@ public class ArticleEntity implements IArticle {
 
     @Override
     public boolean equals(Object obj) {
-        ArticleEntity another = (ArticleEntity)obj;
+        Article another = (Article)obj;
         if (another == null) return false;
 
         return TextUtils.equals(this.getHeading(), another.getHeading())
@@ -124,6 +112,19 @@ public class ArticleEntity implements IArticle {
                 && TextUtils.equals(this.getContent(), another.getContent())
                 && TextUtils.equals(this.getImageUrl(), another.getImageUrl())
                 && (this.getLastModified() != null && this.getLastModified().equals(another.getLastModified())
-                || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
+                    || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
+    }
+
+    public static Article newInstance(@NonNull IArticle proto) {
+        Article result = new Article();
+        result.id = proto.getId();
+        result.heading = proto.getHeading();
+        result.content = proto.getContent();
+        result.description = proto.getDescription();
+        result.imageUrl = proto.getImageUrl();
+        result.lastModified = proto.getLastModified();
+        result.attachments = proto.getAttachments();
+
+        return result;
     }
 }

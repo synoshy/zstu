@@ -30,13 +30,13 @@ import io.synoshy.zstu.domain.common.util.Validator;
 
 public class MenuViewModel extends AndroidViewModel {
 
-    int menuItemBackgroundColor;
+    private int menuItemBackgroundColor;
 
-    int menuItemBackgroundPressedColor;
+    private int menuItemBackgroundPressedColor;
 
-    int menuItemBorderColor;
+    private int menuItemBorderColor;
 
-    int menuItemBorderWidth;
+    private int menuItemBorderWidth;
 
     private Map<String, MenuItem> menuItems;
 
@@ -78,24 +78,16 @@ public class MenuViewModel extends AndroidViewModel {
         }
     }
 
-    public boolean isInitialized() {
-        return menuItems != null;
-    }
-
     public Map<String, MenuItem> getMenuItems() {
         return menuItems;
     }
 
     public void updateItemSizes(int itemSize) {
-        Validator.throwIf(!isInitialized(), "View model is not initialized.");
-
         for (MenuItem item : menuItems.values())
             item.setSize(itemSize);
     }
 
     public void updateItemTextColors(int itemTextColor) {
-        Validator.throwIf(!isInitialized(), "View model is not initialized.");
-
         for (MenuItem item : menuItems.values())
             item.setTextColor(itemTextColor);
     }

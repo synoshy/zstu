@@ -10,19 +10,17 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.data.common;
+package io.synoshy.zstu.domain.common.lang;
 
-import android.arch.persistence.room.*;
+import android.os.AsyncTask;
 
-import io.synoshy.zstu.data.article.Article;
-import io.synoshy.zstu.domain.Constants;
-import io.synoshy.zstu.data.article.ArticleDao;
+public class SimpleAsyncTask extends AsyncTask<Runnable, Void, Void> {
 
-import android.arch.persistence.room.TypeConverters;
+    @Override
+    protected Void doInBackground(Runnable... runnables) {
+        for (Runnable r : runnables)
+            r.run();
 
-@Database(entities = Article.class, version = Constants.Database.VERSION)
-@TypeConverters(PersistedTypeConverters.class)
-public abstract class AppDatabase extends RoomDatabase {
-
-    public abstract ArticleDao articles();
+        return null;
+    }
 }

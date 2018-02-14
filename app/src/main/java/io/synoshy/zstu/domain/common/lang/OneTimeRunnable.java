@@ -10,17 +10,24 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.common.task;
+package io.synoshy.zstu.domain.common.lang;
 
-import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
-public class SimpleAsyncTask extends AsyncTask<Runnable, Void, Void> {
+public class OneTimeRunnable implements Runnable {
+
+    private Runnable runnable;
+
+    public OneTimeRunnable(@NonNull Runnable runnable) {
+        this.runnable = runnable;
+    }
 
     @Override
-    protected Void doInBackground(Runnable... runnables) {
-        for (Runnable r : runnables)
-            r.run();
+    public void run() {
+        if (runnable == null)
+            return;
 
-        return null;
+        runnable.run();
+        runnable = null;
     }
 }

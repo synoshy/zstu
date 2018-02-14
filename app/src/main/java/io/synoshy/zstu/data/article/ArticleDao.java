@@ -25,54 +25,54 @@ import java.util.List;
 public interface ArticleDao {
 
     /**
-    * Create or update collection of {@link ArticleEntity}.
+    * Create or update collection of {@link Article}.
     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void createOrUpdate(ArticleEntity... articleEntities);
+    void createOrUpdate(Article... articleEntities);
 
     /**
-     * Get {@link ArticleEntity} by id.
+     * Get {@link Article} by id.
      */
     @Query("SELECT * FROM articles WHERE id = :id")
-    LiveData<ArticleEntity> getById(int id);
+    LiveData<Article> getById(int id);
 
     /**
-     * Get list of {@link ArticleEntity}.
+     * Get list of {@link Article}.
      */
     @Query("SELECT * FROM articles " +
             "ORDER BY lastModified DESC")
-    LiveData<List<ArticleEntity>> getList();
+    LiveData<List<Article>> getList();
 
     /**
-     * Get list batch of {@link ArticleEntity}.
+     * Get list batch of {@link Article}.
      */
     @Query("SELECT * FROM articles " +
             "ORDER BY lastModified DESC " +
             "LIMIT :batchSize " +
             "OFFSET :skipSize")
-    LiveData<List<ArticleEntity>> getListBatch(int skipSize, int batchSize);
+    LiveData<List<Article>> getListBatch(int skipSize, int batchSize);
 
     /**
-     * Get list of {@link ArticleEntity} by heading.
+     * Get list of {@link Article} by heading.
      * @param heading Heading pattern.
      */
     @Query("SELECT * FROM articles " +
             "WHERE heading LIKE :heading " +
             "ORDER BY lastModified DESC")
-    LiveData<List<ArticleEntity>> getByHeading(String heading);
+    LiveData<List<Article>> getByHeading(String heading);
 
     /**
-     * Get list of {@link ArticleEntity} that matches search query.
+     * Get list of {@link Article} that matches search query.
      * @param query Search pattern.
      */
     @Query("SELECT * FROM articles " +
             "WHERE heading LIKE :query OR content LIKE :query " +
             "ORDER BY lastModified DESC")
-    LiveData<List<ArticleEntity>> search(String query);
+    LiveData<List<Article>> search(String query);
 
     /**
-     * Delete collection of {@link ArticleEntity}.
+     * Delete collection of {@link Article}.
      */
     @Delete
-    void delete(ArticleEntity... articleEntities);
+    void delete(Article... articleEntities);
 }

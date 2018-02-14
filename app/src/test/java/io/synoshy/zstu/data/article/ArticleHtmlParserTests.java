@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import io.synoshy.zstu.domain.article.Article;
+import io.synoshy.zstu.presentation.feed.Article;
 
 
 public class ArticleHtmlParserTests {

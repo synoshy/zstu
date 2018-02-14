@@ -13,7 +13,6 @@
 package io.synoshy.zstu.presentation.feed;
 
 import android.app.FragmentTransaction;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
@@ -24,20 +23,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindDimen;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
-import io.synoshy.zstu.domain.article.Article;
-import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.presentation.common.ActivityBase;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
 import io.synoshy.zstu.presentation.menu.MenuButton;
@@ -46,9 +40,6 @@ import io.synoshy.zstu.presentation.menu.MenuFragment;
 
 public class FeedActivity extends ActivityBase
         implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MenuControl {
-
-    @Inject
-    ArticleManager articleManager;
 
     @BindView(R.id.feed_list)
     RecyclerView feedList;
@@ -92,35 +83,28 @@ public class FeedActivity extends ActivityBase
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        performInjections();
-        initialize();
-    }
-
-    private void performInjections() {
         ButterKnife.bind(this);
-        getAppComponent().inject(this);
+        initialize();
     }
 
     private void initialize() {
         feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
         feedViewModel.getShowNoPostsMessage().observe(this,
                 x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
+        feedViewModel.runOnceUpdated(() -> {
+            swipeRefreshLayout.setRefreshing(true);
+            feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
+        });
         feedViewModel.getArticles().observe(this, x -> {
             feedListAdapter.mergeChanges(x);
             feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
-            
-            if (!feedViewModel.getWasInitializedBefore()) {
-                swipeRefreshLayout.setRefreshing(true);
-                feedViewModel.updateData(() -> {
-                    swipeRefreshLayout.setRefreshing(false);
-                    feedViewModel.setWasInitializedBefore(true);
-                });
-            }
+            feedViewModel.getOnceUpdated().run();
         });
 
         menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
                 (AnimatedVectorDrawable) crossToHamburgerIcon);
         menuButton.setOnClickListener(this);
+
         if (menuFragment == null)
             menuFragment = new MenuFragment();
 

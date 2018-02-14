@@ -21,12 +21,11 @@ import dagger.Component;
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.di.module.AppModule;
 import io.synoshy.zstu.di.module.DataModule;
-import io.synoshy.zstu.di.module.PresentationModule;
 import io.synoshy.zstu.presentation.feed.FeedActivity;
 import io.synoshy.zstu.presentation.feed.FeedViewModel;
 import io.synoshy.zstu.presentation.menu.MenuFragment;
 
-@Component(modules = {AppModule.class, DataModule.class, PresentationModule.class})
+@Component(modules = {AppModule.class, DataModule.class})
 @Singleton
 public interface AppComponent {
 

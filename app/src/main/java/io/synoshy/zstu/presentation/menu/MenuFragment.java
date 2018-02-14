@@ -16,7 +16,6 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindColor;
 import butterknife.ButterKnife;
@@ -35,7 +35,6 @@ import io.synoshy.zstu.databinding.FragmentMenuBinding;
 import io.synoshy.zstu.presentation.common.FragmentBase;
 import io.synoshy.zstu.presentation.common.util.AppCompatNavigator;
 import io.synoshy.zstu.presentation.common.util.ViewUtil;
-import io.synoshy.zstu.presentation.common.viewmodel.InjectableViewModelFactory;
 
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
@@ -44,9 +43,6 @@ public class MenuFragment extends FragmentBase {
 
     private static final float LANDSCAPE_MENU_ITEM_SIZE_MULTIPLIER = .25f;
     private static final float PORTRAIT_MENU_ITEM_SIZE_MULTIPLIER = .375f;
-
-    @Inject
-    InjectableViewModelFactory viewModelFactory;
 
     @BindColor(R.color.menu_item_text)
     int menuItemTextColor;
@@ -75,7 +71,7 @@ public class MenuFragment extends FragmentBase {
     }
 
     private void initialize() {
-        menuViewModel = ViewModelProviders.of(this, viewModelFactory).get(MenuViewModel.class);
+        menuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         menuViewModel.setItemOnClickHandler("News", x -> {
             runActivity(AppCompatNavigator.getActivity("News"));
             return null;

@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import io.synoshy.zstu.databinding.RowFeedBinding;
-import io.synoshy.zstu.domain.article.Article;
 import io.synoshy.zstu.domain.common.util.Validator;
 
 public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ArticleHolder> {

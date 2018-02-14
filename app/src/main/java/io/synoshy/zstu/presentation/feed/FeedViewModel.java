@@ -16,10 +16,13 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
+
+import com.annimon.stream.Stream;
 
 import java.util.Date;
 import java.util.List;
@@ -29,8 +32,8 @@ import javax.inject.Inject;
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.domain.Constants;
-import io.synoshy.zstu.domain.article.Article;
 import io.synoshy.zstu.domain.article.ArticleManager;
+import io.synoshy.zstu.domain.common.lang.OneTimeRunnable;
 import io.synoshy.zstu.domain.common.util.Validator;
 
 public class FeedViewModel extends AndroidViewModel {
@@ -42,7 +45,7 @@ public class FeedViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> showNoPostsMessage = new MutableLiveData<>();
 
-    private boolean wasInitializedBefore = false;
+    private OneTimeRunnable onceUpdated;
 
     public FeedViewModel(@NonNull Application application) {
         super(application);
@@ -51,7 +54,8 @@ public class FeedViewModel extends AndroidViewModel {
 
     private void initialize() {
         ((ZSTUApplication)getApplication()).getAppComponent().inject(this);
-        articles = articleManager.getList();
+        articles = Transformations.map(articleManager.getList(),
+                x -> Stream.of(x).map(Article::newInstance).toList());
     }
 
     public LiveData<List<Article>> getArticles() {
@@ -87,11 +91,11 @@ public class FeedViewModel extends AndroidViewModel {
         });
     }
 
-    public boolean getWasInitializedBefore() {
-        return wasInitializedBefore;
+    public void runOnceUpdated(@NonNull Runnable runnable) {
+        this.onceUpdated = new OneTimeRunnable(runnable);
     }
 
-    public void setWasInitializedBefore(boolean initialized) {
-        wasInitializedBefore = initialized;
+    public OneTimeRunnable getOnceUpdated() {
+        return onceUpdated;
     }
 }

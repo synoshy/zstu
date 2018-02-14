@@ -10,23 +10,37 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.domain.article;
+package io.synoshy.zstu.data.article;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.Date;
 
-/**
- * Class that represents a news Article.
- */
+import io.synoshy.zstu.domain.article.IArticle;
+
+@Entity(tableName = "articles",
+        indices = {
+            @Index(name = "index_article_id", value = "id", unique = true),
+            @Index(name = "index_article_search", value = {"heading", "content"})
+        })
 public class Article implements IArticle {
 
     //region Fields
 
+    @PrimaryKey
+    @ColumnInfo(index = true)
+    @NonNull
     private String id;
 
+    @ColumnInfo(index = true)
     private String heading;
 
+    @ColumnInfo(index = true)
     private String content;
 
     private String description;
@@ -41,6 +55,7 @@ public class Article implements IArticle {
 
     //region Field accessors
 
+    @Override
     public String getId() {
         return id;
     }
@@ -98,6 +113,19 @@ public class Article implements IArticle {
     }
 
     //endregion
+
+    public static Article newInstance(@NonNull IArticle proto) {
+        Article result = new Article();
+        result.id = proto.getId();
+        result.heading = proto.getHeading();
+        result.content = proto.getContent();
+        result.description = proto.getDescription();
+        result.imageUrl = proto.getImageUrl();
+        result.lastModified = proto.getLastModified();
+        result.attachments = proto.getAttachments();
+
+        return result;
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -14,28 +14,26 @@ package io.synoshy.zstu.data.article;
 
 import org.junit.Test;
 
-import io.synoshy.zstu.data.article.ArticleEntity;
-
-public class ArticleEntityTests {
+public class ArticleTests {
 
     @Test
     public void equals_Null_False() {
-        assert !new ArticleEntity().equals(null);
+        assert !new Article().equals(null);
     }
 
     @Test
     public void equals_Empty_True() {
-        assert new ArticleEntity().equals(new ArticleEntity());
+        assert new Article().equals(new Article());
     }
 
     @Test
     public void equals_DifferentIds_True() {
-        ArticleEntity article1 = new ArticleEntity();
-        article1.setId(0);
+        Article article1 = new Article();
+        article1.setId("0");
         article1.setContent("content");
 
-        ArticleEntity article2 = new ArticleEntity();
-        article2.setId(1);
+        Article article2 = new Article();
+        article2.setId("1");
         article2.setContent("content");
 
         assert article1.equals(article2);
@@ -43,10 +41,10 @@ public class ArticleEntityTests {
 
     @Test
     public void equals_DifferentHeadings_False() {
-        ArticleEntity article1 = new ArticleEntity();
+        Article article1 = new Article();
         article1.setHeading("0");
 
-        ArticleEntity article2 = new ArticleEntity();
+        Article article2 = new Article();
         article2.setHeading("1");
 
         assert !article1.equals(article2);

@@ -16,8 +16,6 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import io.synoshy.zstu.domain.article.Article;
-
 public class FeedRowViewModel extends ViewModel {
 
     private Article article;

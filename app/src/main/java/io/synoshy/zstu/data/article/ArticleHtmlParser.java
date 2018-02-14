@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.synoshy.zstu.domain.Constants;
-import io.synoshy.zstu.domain.article.Article;
+import io.synoshy.zstu.presentation.feed.Article;
 import io.synoshy.zstu.domain.common.util.ExceptionWrapper;
 
 public class ArticleHtmlParser {
