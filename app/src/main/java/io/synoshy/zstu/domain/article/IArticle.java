@@ -10,9 +10,23 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.domain.common;
+package io.synoshy.zstu.domain.article;
 
-public interface Entity {
+import java.util.Date;
 
-    String getId();
+import io.synoshy.zstu.domain.common.Entity;
+
+public interface IArticle extends Entity {
+
+    String getHeading();
+
+    String getDescription();
+
+    String getContent();
+
+    String getImageUrl();
+
+    Date getLastModified();
+
+    String[] getAttachments();
 }

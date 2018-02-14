@@ -31,4 +31,20 @@ public class PersistedTypeConverters {
                 ? null
                 : date.getTime();
     }
+
+    @TypeConverter
+    public static String toStringArrayXml(String[] array) {
+        if (array == null)
+            return null;
+
+        return JsonUtil.serialize(array);
+    }
+
+    @TypeConverter
+    public static String[] fromStringArrayXml(String xml) {
+        if (xml == null)
+            return null;
+
+        return JsonUtil.deserialize(xml, String[].class);
+    }
 }

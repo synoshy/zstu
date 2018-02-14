@@ -19,11 +19,11 @@ import java.util.Date;
 /**
  * Class that represents a news Article.
  */
-public class Article {
+public class Article implements IArticle {
 
     //region Fields
 
-    private int id;
+    private String id;
 
     private String heading;
 
@@ -31,21 +31,21 @@ public class Article {
 
     private String description;
 
-    private String imageSrc;
+    private String imageUrl;
 
     private Date lastModified;
 
-    private String url;
+    private String[] attachments;
 
     //endregion
 
     //region Field accessors
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,12 +73,12 @@ public class Article {
         this.description = description;
     }
 
-    public String getImageSrc() {
-        return imageSrc;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Date getLastModified() {
@@ -89,12 +89,12 @@ public class Article {
         this.lastModified = lastModified;
     }
 
-    public String getUrl() {
-        return url;
+    public String[] getAttachments() {
+        return attachments;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setAttachments(String[] attachments) {
+        this.attachments = attachments;
     }
 
     //endregion
@@ -107,8 +107,7 @@ public class Article {
         return TextUtils.equals(this.getHeading(), another.getHeading())
                 && TextUtils.equals(this.getDescription(), another.getDescription())
                 && TextUtils.equals(this.getContent(), another.getContent())
-                && TextUtils.equals(this.getImageSrc(), another.getImageSrc())
-                && TextUtils.equals(this.getUrl(), another.getUrl())
+                && TextUtils.equals(this.getImageUrl(), another.getImageUrl())
                 && (this.getLastModified() != null && this.getLastModified().equals(another.getLastModified())
                     || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
     }

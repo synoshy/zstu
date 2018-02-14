@@ -34,12 +34,11 @@ public class ArticleHtmlParser {
         Element heading = articleNode.selectFirst("h4 a");
         if (heading != null) {
             result.setHeading(heading.text());
-            result.setUrl(heading.attr("href"));
         }
 
         Element image = articleNode.selectFirst("img");
         if (image != null)
-            result.setImageSrc(image.attr("src"));
+            result.setImageUrl(image.attr("src"));
 
         Element time = articleNode.selectFirst("p.time");
         String timeString;

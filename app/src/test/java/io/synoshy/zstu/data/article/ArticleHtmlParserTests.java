@@ -19,7 +19,6 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import io.synoshy.zstu.data.article.ArticleHtmlParser;
 import io.synoshy.zstu.domain.article.Article;
 
 
@@ -49,7 +48,7 @@ public class ArticleHtmlParserTests {
         assert article.getHeading().equals("heading")
                 && article.getDescription().equals("description")
                 && article.getLastModified().equals(calendar.getTime())
-                && article.getImageSrc() == null;
+                && article.getImageUrl() == null;
     }
 
     @Test

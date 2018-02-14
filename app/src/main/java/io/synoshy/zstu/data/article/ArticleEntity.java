@@ -19,6 +19,7 @@ import android.text.TextUtils;
 
 import java.util.Date;
 
+import io.synoshy.zstu.domain.article.IArticle;
 import io.synoshy.zstu.domain.common.Entity;
 
 @android.arch.persistence.room.Entity(tableName = "articles",
@@ -26,13 +27,12 @@ import io.synoshy.zstu.domain.common.Entity;
             @Index(name = "index_article_id", value = "id", unique = true),
             @Index(name = "index_article_search", value = {"heading", "content"})
         })
-public class ArticleEntity implements Entity {
+public class ArticleEntity implements IArticle {
 
     //region Fields
 
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(index = true)
-    private int id;
+    private String id;
 
     @ColumnInfo(index = true)
     private String heading;
@@ -42,22 +42,22 @@ public class ArticleEntity implements Entity {
 
     private String description;
 
-    private String imageSrc;
+    private String imageUrl;
 
     private Date lastModified;
 
-    private String url;
+    private String[] attachments;
 
     //endregion
 
     //region Field accessors
 
     @Override
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -85,12 +85,12 @@ public class ArticleEntity implements Entity {
         this.description = description;
     }
 
-    public String getImageSrc() {
-        return imageSrc;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Date getLastModified() {
@@ -101,12 +101,12 @@ public class ArticleEntity implements Entity {
         this.lastModified = lastModified;
     }
 
-    public String getUrl() {
-        return url;
+    public String[] getAttachments() {
+        return attachments;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setAttachments(String[] attachments) {
+        this.attachments = attachments;
     }
 
     //endregion
@@ -119,8 +119,7 @@ public class ArticleEntity implements Entity {
         return TextUtils.equals(this.getHeading(), another.getHeading())
                 && TextUtils.equals(this.getDescription(), another.getDescription())
                 && TextUtils.equals(this.getContent(), another.getContent())
-                && TextUtils.equals(this.getImageSrc(), another.getImageSrc())
-                && TextUtils.equals(this.getUrl(), another.getUrl())
+                && TextUtils.equals(this.getImageUrl(), another.getImageUrl())
                 && (this.getLastModified() != null && this.getLastModified().equals(another.getLastModified())
                 || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
     }
