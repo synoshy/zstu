@@ -10,7 +10,7 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.di.module;
+package io.synoshy.zstu.di.module;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModel;

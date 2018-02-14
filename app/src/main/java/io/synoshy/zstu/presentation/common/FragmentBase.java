@@ -15,7 +15,7 @@ package io.synoshy.zstu.presentation.common;
 import android.support.v4.app.Fragment;
 
 import io.synoshy.zstu.ZSTUApplication;
-import io.synoshy.zstu.presentation.di.component.AppComponent;
+import io.synoshy.zstu.di.component.AppComponent;
 
 public class FragmentBase extends Fragment {
 

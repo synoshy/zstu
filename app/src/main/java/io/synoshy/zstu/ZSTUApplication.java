@@ -15,9 +15,9 @@ package io.synoshy.zstu;
 import android.app.Application;
 
 import io.synoshy.zstu.presentation.common.util.AppCompatNavigator;
-import io.synoshy.zstu.presentation.di.component.AppComponent;
-import io.synoshy.zstu.presentation.di.component.DaggerAppComponent;
-import io.synoshy.zstu.presentation.di.module.AppModule;
+import io.synoshy.zstu.di.component.AppComponent;
+import io.synoshy.zstu.di.component.DaggerAppComponent;
+import io.synoshy.zstu.di.module.AppModule;
 import io.synoshy.zstu.presentation.feed.FeedActivity;
 
 public class ZSTUApplication extends Application {

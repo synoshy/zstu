@@ -10,7 +10,7 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.di.component;
+package io.synoshy.zstu.di.component;
 
 import android.app.Application;
 import android.content.Context;
@@ -19,9 +19,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import io.synoshy.zstu.ZSTUApplication;
-import io.synoshy.zstu.presentation.di.module.AppModule;
-import io.synoshy.zstu.presentation.di.module.DataModule;
-import io.synoshy.zstu.presentation.di.module.PresentationModule;
+import io.synoshy.zstu.di.module.AppModule;
+import io.synoshy.zstu.di.module.DataModule;
+import io.synoshy.zstu.di.module.PresentationModule;
 import io.synoshy.zstu.presentation.feed.FeedActivity;
 import io.synoshy.zstu.presentation.feed.FeedViewModel;
 import io.synoshy.zstu.presentation.menu.MenuFragment;

@@ -18,7 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.ZSTUApplication;
-import io.synoshy.zstu.presentation.di.component.AppComponent;
+import io.synoshy.zstu.di.component.AppComponent;
 
 public class ActivityBase extends AppCompatActivity {
 
