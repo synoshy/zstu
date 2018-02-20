@@ -58,16 +58,27 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
+        android:id="@+id/menu_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/menu_container" />
+        android:layout_height="match_parent" />
 
-    <io.synoshy.zstu.presentation.menu.MenuButton
-        android:id="@+id/btn_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_margin="@dimen/button_icon"
-        app:fabSize="auto" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <io.synoshy.zstu.presentation.menu.MenuButton
+            android:id="@+id/btn_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/margin_button_icon"
+            app:fabSize="auto" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/article_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

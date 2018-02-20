@@ -34,7 +34,7 @@ public interface ArticleDao {
      * Get {@link Article} by id.
      */
     @Query("SELECT * FROM articles WHERE id = :id")
-    LiveData<Article> getById(int id);
+    LiveData<Article> getById(String id);
 
     /**
      * Get list of {@link Article}.

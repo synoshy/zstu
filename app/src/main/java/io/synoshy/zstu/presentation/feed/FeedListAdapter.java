@@ -21,6 +21,7 @@ import java.util.List;
 
 import io.synoshy.zstu.databinding.RowFeedBinding;
 import io.synoshy.zstu.domain.common.util.Validator;
+import io.synoshy.zstu.presentation.article.Article;
 
 public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.ArticleHolder> {
 
@@ -46,7 +47,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.Articl
 
     @Override
     public void onBindViewHolder(ArticleHolder holder, int position) {
-        holder.getBinding().setModel(new FeedRowViewModel(articles.get(position)));
+        FeedRowViewModel model = new FeedRowViewModel();
+        model.setArticle(articles.get(position));
+        holder.getBinding().setModel(model);
+        holder.getBinding().getRoot().setOnClickListener(
+                x -> ((FeedActivity)x.getContext()).showArticleInfo(model.getArticle().getId())
+        );
     }
 
     @Override

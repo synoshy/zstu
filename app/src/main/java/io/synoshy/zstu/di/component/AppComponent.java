@@ -18,12 +18,10 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.di.module.AppModule;
 import io.synoshy.zstu.di.module.DataModule;
-import io.synoshy.zstu.presentation.feed.FeedActivity;
+import io.synoshy.zstu.presentation.article.ArticleViewModel;
 import io.synoshy.zstu.presentation.feed.FeedViewModel;
-import io.synoshy.zstu.presentation.menu.MenuFragment;
 
 @Component(modules = {AppModule.class, DataModule.class})
 @Singleton
@@ -33,11 +31,7 @@ public interface AppComponent {
 
     Application application();
 
-    void inject(ZSTUApplication application);
-
-    void inject(FeedActivity activity);
-
     void inject(FeedViewModel model);
 
-    void inject(MenuFragment fragment);
+    void inject(ArticleViewModel viewModel);
 }

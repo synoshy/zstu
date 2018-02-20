@@ -33,8 +33,10 @@ import io.synoshy.zstu.R;
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.domain.Constants;
 import io.synoshy.zstu.domain.article.ArticleManager;
+import io.synoshy.zstu.domain.article.IArticle;
 import io.synoshy.zstu.domain.common.lang.OneTimeRunnable;
 import io.synoshy.zstu.domain.common.util.Validator;
+import io.synoshy.zstu.presentation.article.Article;
 
 public class FeedViewModel extends AndroidViewModel {
 
@@ -82,7 +84,7 @@ public class FeedViewModel extends AndroidViewModel {
                         Toast.LENGTH_SHORT).show();
             }
             else if (x.size() > 0)
-                articleManager.createOrUpdate(x.toArray(new Article[0]));
+                articleManager.createOrUpdate(x.toArray(new IArticle[0]));
 
             if (callback != null)
                 callback.run();

@@ -29,7 +29,7 @@ public interface Manager<T> {
      * Get an entity by id.
      * @param id Entity id.
      */
-    LiveData<T> getById(int id);
+    LiveData<T> getById(String id);
 
     /**
      * Get a list of entities.

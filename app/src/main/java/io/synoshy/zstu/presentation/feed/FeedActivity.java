@@ -17,6 +17,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,6 +33,9 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
+import io.synoshy.zstu.presentation.article.Article;
+import io.synoshy.zstu.presentation.article.ArticleControl;
+import io.synoshy.zstu.presentation.article.ArticleFragment;
 import io.synoshy.zstu.presentation.common.ActivityBase;
 import io.synoshy.zstu.presentation.common.decoration.OffsetDecoration;
 import io.synoshy.zstu.presentation.menu.MenuButton;
@@ -39,7 +43,7 @@ import io.synoshy.zstu.presentation.menu.MenuControl;
 import io.synoshy.zstu.presentation.menu.MenuFragment;
 
 public class FeedActivity extends ActivityBase
-        implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, MenuControl {
+        implements SwipeRefreshLayout.OnRefreshListener, MenuControl, ArticleControl {
 
     @BindView(R.id.feed_list)
     RecyclerView feedList;
@@ -77,7 +81,11 @@ public class FeedActivity extends ActivityBase
 
     private boolean isMenuShown = false;
 
+    private boolean isArticleShown = false;
+
     private MenuFragment menuFragment;
+
+    private ArticleFragment articleFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,10 +111,18 @@ public class FeedActivity extends ActivityBase
 
         menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
                 (AnimatedVectorDrawable) crossToHamburgerIcon);
-        menuButton.setOnClickListener(this);
+        menuButton.setOnClickListener(x -> {
+            if (!isMenuShown)
+                showMenu();
+            else
+                hideMenu();
+        });
 
         if (menuFragment == null)
             menuFragment = new MenuFragment();
+
+        if (articleFragment == null)
+            articleFragment = new ArticleFragment();
 
         List<Article> articles = feedViewModel.getArticles().getValue();
         if (articles == null)
@@ -130,6 +146,9 @@ public class FeedActivity extends ActivityBase
             showMenu();
         else
             menuButton.resetState();
+
+        if (isArticleShown)
+            showArticle(articleFragment.getArticleId());
     }
 
     @Override
@@ -141,36 +160,37 @@ public class FeedActivity extends ActivityBase
             menuFragment = null;
             isMenuShown = true;
         }
+
+        if (isArticleShown) {
+            hideArticle();
+            articleFragment = null;
+            isArticleShown = true;
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("isMenuShown", isMenuShown);
+        outState.putBoolean("isArticleShown", isArticleShown);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey("isMenuShown"))
-            isMenuShown = savedInstanceState.getBoolean("isMenuShown");
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("isMenuShown"))
+                isMenuShown = savedInstanceState.getBoolean("isMenuShown");
+
+            if (savedInstanceState.containsKey("isArticleShown"))
+                isArticleShown = savedInstanceState.getBoolean("isArticleShown");
+        }
     }
 
     @Override
     public void onRefresh() {
         feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
-    }
-
-    /**
-     * Menu button on click handler.
-     */
-    @Override
-    public void onClick(View view) {
-        if (!isMenuShown)
-            showMenu();
-        else
-            hideMenu();
     }
 
     public void showMenu() {
@@ -205,5 +225,50 @@ public class FeedActivity extends ActivityBase
             menuButton.resetState();
             isMenuShown = false;
         }
+
+        if (isArticleShown) {
+            isArticleShown = false;
+        }
+    }
+
+    public void showArticleInfo(@NonNull String articleId) {
+        if (isArticleShown)
+            hideArticle();
+
+        showArticle(articleId);
+    }
+
+    @Override
+    public void showArticle(String articleId) {
+        if (articleFragment == null)
+            articleFragment = new ArticleFragment();
+
+        isArticleShown = true;
+
+        Bundle params = new Bundle();
+        params.putString("articleId", articleId);
+        articleFragment.setArguments(params);
+
+        getSupportFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(R.id.article_container, articleFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void hideArticle() {
+        if (!isArticleShown)
+            return;
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .remove(articleFragment)
+                .commit();
+
+        fragmentManager.popBackStack();
+
+        isArticleShown = false;
     }
 }

@@ -65,7 +65,7 @@ public class ArticleManagerImpl implements ArticleManager {
     }
 
     @Override
-    public LiveData<IArticle> getById(int id) {
+    public LiveData<IArticle> getById(String id) {
         return transform(getAppDatabase().articles().getById(id));
     }
 

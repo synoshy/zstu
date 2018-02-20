@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.Date;
+import java.util.UUID;
 
 import io.synoshy.zstu.domain.article.IArticle;
 
@@ -52,6 +53,10 @@ public class Article implements IArticle {
     private String[] attachments;
 
     //endregion
+
+    public Article() {
+        id = UUID.randomUUID().toString();
+    }
 
     //region Field accessors
 

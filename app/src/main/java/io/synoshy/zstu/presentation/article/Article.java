@@ -10,7 +10,7 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.feed;
+package io.synoshy.zstu.presentation.article;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;

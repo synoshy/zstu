@@ -12,14 +12,21 @@
 
 package io.synoshy.zstu.presentation.common;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.di.component.AppComponent;
 
 public class FragmentBase extends Fragment {
 
-    protected AppComponent getAppComponent() {
-        return ((ZSTUApplication)getActivity().getApplication()).getAppComponent();
+    @Nullable
+    @Override
+    public View getView() {
+        if (this instanceof HasBinding)
+            return ((HasBinding)this).getBinding().getRoot();
+
+        return super.getView();
     }
 }

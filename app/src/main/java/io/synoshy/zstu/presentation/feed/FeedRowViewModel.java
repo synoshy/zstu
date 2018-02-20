@@ -16,13 +16,11 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import io.synoshy.zstu.presentation.article.Article;
+
 public class FeedRowViewModel extends ViewModel {
 
     private Article article;
-
-    public FeedRowViewModel(@NonNull Article article) {
-        this.article = article;
-    }
 
     public Article getArticle() {
         return article;

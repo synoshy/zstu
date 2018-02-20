@@ -17,6 +17,7 @@ import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,29 +26,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.databinding.FragmentMenuBinding;
 import io.synoshy.zstu.presentation.common.FragmentBase;
+import io.synoshy.zstu.presentation.common.HasBinding;
 import io.synoshy.zstu.presentation.common.util.AppCompatNavigator;
 import io.synoshy.zstu.presentation.common.util.ViewUtil;
 
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
-public class MenuFragment extends FragmentBase {
+public class MenuFragment extends FragmentBase implements HasBinding {
 
     private static final float LANDSCAPE_MENU_ITEM_SIZE_MULTIPLIER = .25f;
     private static final float PORTRAIT_MENU_ITEM_SIZE_MULTIPLIER = .375f;
 
     @BindColor(R.color.menu_item_text)
     int menuItemTextColor;
-
-    ViewGroup container;
 
     private MenuViewModel menuViewModel;
 
@@ -56,7 +53,6 @@ public class MenuFragment extends FragmentBase {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.container = container;
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_menu, container, false);
         ButterKnife.bind(this, binding.getRoot());
         initialize();
@@ -67,7 +63,6 @@ public class MenuFragment extends FragmentBase {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getAppComponent().inject(this);
     }
 
     private void initialize() {
@@ -142,12 +137,8 @@ public class MenuFragment extends FragmentBase {
             menuViewModel.updateItemSizes(calculateMenuItemSize(orientation, screenWidth));
     }
 
-    @Nullable
     @Override
-    public View getView() {
-        if (binding == null)
-            return null;
-
-        return binding.getRoot();
+    public ViewDataBinding getBinding() {
+        return binding;
     }
 }

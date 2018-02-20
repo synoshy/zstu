@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2018 Denys Zosimovych Open Source Project
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -10,21 +10,20 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.common;
+package io.synoshy.zstu.presentation.common.glide;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
 
 import io.synoshy.zstu.R;
-import io.synoshy.zstu.ZSTUApplication;
-import io.synoshy.zstu.di.component.AppComponent;
 
-public class ActivityBase extends AppCompatActivity {
+public class ImageBinder {
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTheme(R.style.AppTheme);
+    @BindingAdapter("imageUrl")
+    public static void setImageUrl(ImageView imageView, String url) {
+        GlideApp.with(imageView.getContext())
+                .load(url)
+                .placeholder(R.drawable.placeholder)
+                .into(imageView);
     }
 }
