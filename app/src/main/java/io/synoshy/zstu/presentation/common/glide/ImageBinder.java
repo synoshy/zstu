@@ -23,7 +23,7 @@ public class ImageBinder {
     public static void setImageUrl(ImageView imageView, String url) {
         GlideApp.with(imageView.getContext())
                 .load(url)
-                .placeholder(R.drawable.placeholder)
+                .placeholder(R.color.background_fade_light)
                 .into(imageView);
     }
 }

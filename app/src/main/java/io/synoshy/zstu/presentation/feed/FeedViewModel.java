@@ -47,7 +47,7 @@ public class FeedViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> showNoPostsMessage = new MutableLiveData<>();
 
-    private OneTimeRunnable onceUpdated;
+    private OneTimeRunnable onFirstUpdate;
 
     public FeedViewModel(@NonNull Application application) {
         super(application);
@@ -93,11 +93,11 @@ public class FeedViewModel extends AndroidViewModel {
         });
     }
 
-    public void runOnceUpdated(@NonNull Runnable runnable) {
-        this.onceUpdated = new OneTimeRunnable(runnable);
+    public OneTimeRunnable getOnFirstUpdate() {
+        return onFirstUpdate;
     }
 
-    public OneTimeRunnable getOnceUpdated() {
-        return onceUpdated;
+    public void setOnFirstUpdate(OneTimeRunnable onFirstUpdate) {
+        this.onFirstUpdate = onFirstUpdate;
     }
 }

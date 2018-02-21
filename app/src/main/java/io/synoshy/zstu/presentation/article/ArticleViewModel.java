@@ -14,9 +14,7 @@ package io.synoshy.zstu.presentation.article;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 
@@ -43,15 +41,5 @@ public class ArticleViewModel extends AndroidViewModel {
 
     public void loadArticle(String articleId) {
         article = Transformations.map(articleManager.getById(articleId), Article::newInstance);
-    }
-
-    public void observeArticle(LifecycleOwner owner, Observer<Article> observer) {
-        article.observe(owner, observer);
-    }
-
-    public void testClick(Object v) {
-        int a = 2;
-        int b = a + 1;
-        int c = b | a;
     }
 }

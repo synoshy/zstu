@@ -42,6 +42,7 @@
                     android:layout_marginTop="@dimen/margin_normal"
                     android:text="@{model.article.value.heading}"
                     android:textColor="@color/article_text"
+                    android:autoLink="web"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -49,8 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_larger"
-                    android:scaleType="centerInside"
-                    android:onClick="@{model::testClick}"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     app:imageUrl="@{model.article.value.imageUrl}" />
 
                 <TextView

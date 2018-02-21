@@ -33,6 +33,7 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
+import io.synoshy.zstu.domain.common.lang.OneTimeRunnable;
 import io.synoshy.zstu.presentation.article.Article;
 import io.synoshy.zstu.presentation.article.ArticleControl;
 import io.synoshy.zstu.presentation.article.ArticleFragment;
@@ -87,6 +88,8 @@ public class FeedActivity extends ActivityBase
 
     private ArticleFragment articleFragment;
 
+    private String shownArticleId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,16 +100,19 @@ public class FeedActivity extends ActivityBase
 
     private void initialize() {
         feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
+        if (feedViewModel.getOnFirstUpdate() == null) {
+            feedViewModel.setOnFirstUpdate(new OneTimeRunnable(() -> {
+                swipeRefreshLayout.setRefreshing(true);
+                feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
+            }));
+        }
+
         feedViewModel.getShowNoPostsMessage().observe(this,
                 x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
-        feedViewModel.runOnceUpdated(() -> {
-            swipeRefreshLayout.setRefreshing(true);
-            feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
-        });
         feedViewModel.getArticles().observe(this, x -> {
             feedListAdapter.mergeChanges(x);
             feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
-            feedViewModel.getOnceUpdated().run();
+            feedViewModel.getOnFirstUpdate().run();
         });
 
         menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
@@ -120,9 +126,6 @@ public class FeedActivity extends ActivityBase
 
         if (menuFragment == null)
             menuFragment = new MenuFragment();
-
-        if (articleFragment == null)
-            articleFragment = new ArticleFragment();
 
         List<Article> articles = feedViewModel.getArticles().getValue();
         if (articles == null)
@@ -148,7 +151,7 @@ public class FeedActivity extends ActivityBase
             menuButton.resetState();
 
         if (isArticleShown)
-            showArticle(articleFragment.getArticleId());
+            showArticle(shownArticleId);
     }
 
     @Override
@@ -173,6 +176,7 @@ public class FeedActivity extends ActivityBase
         super.onSaveInstanceState(outState);
         outState.putBoolean("isMenuShown", isMenuShown);
         outState.putBoolean("isArticleShown", isArticleShown);
+        outState.putString("shownArticleId", shownArticleId);
     }
 
     @Override
@@ -185,6 +189,9 @@ public class FeedActivity extends ActivityBase
 
             if (savedInstanceState.containsKey("isArticleShown"))
                 isArticleShown = savedInstanceState.getBoolean("isArticleShown");
+
+            if (savedInstanceState.containsKey("shownArticleId"))
+                shownArticleId = savedInstanceState.getString("shownArticleId");
         }
     }
 
@@ -240,10 +247,12 @@ public class FeedActivity extends ActivityBase
 
     @Override
     public void showArticle(String articleId) {
-        if (articleFragment == null)
-            articleFragment = new ArticleFragment();
+        if (articleId == null)
+            throw new RuntimeException("Failed to show details for null article id.");
 
         isArticleShown = true;
+        shownArticleId = articleId;
+        articleFragment = new ArticleFragment();
 
         Bundle params = new Bundle();
         params.putString("articleId", articleId);

@@ -119,7 +119,10 @@ public class Article implements IArticle {
 
     //endregion
 
-    public static Article newInstance(@NonNull IArticle proto) {
+    public static Article newInstance(IArticle proto) {
+        if (proto == null)
+            return null;
+
         Article result = new Article();
         result.id = proto.getId();
         result.heading = proto.getHeading();
