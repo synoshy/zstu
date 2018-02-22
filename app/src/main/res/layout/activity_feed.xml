@@ -1,84 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@color/feed_background" />
+    <data>
 
-    <LinearLayout
-        android:id="@+id/info_swipe_to_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/transparent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/row_feed_padding"
-        android:paddingRight="@dimen/row_feed_padding"
-        android:visibility="gone">
+        <variable
+            name="model"
+            type="io.synoshy.zstu.presentation.feed.FeedViewModel" />
+    </data>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/transparent"
-            android:scaleType="center"
-            android:src="@drawable/ic_globe"
-            android:tint="@color/no_connection" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/transparent"
-            android:gravity="center"
-            android:text="@string/no_connection"
-            android:textColor="@color/no_connection"
-            android:textSize="@dimen/text_large" />
-
-    </LinearLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="top|center_horizontal"
-        android:background="@color/transparent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/feed_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparent" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <FrameLayout
-        android:id="@+id/menu_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <FrameLayout
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <io.synoshy.zstu.presentation.menu.MenuButton
-            android:id="@+id/btn_menu"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@color/feed_background" />
+
+        <LinearLayout
+            android:id="@+id/info_swipe_to_update"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="@dimen/margin_button_icon"
-            app:fabSize="auto" />
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/row_feed_padding"
+            android:paddingRight="@dimen/row_feed_padding"
+            android:visibility="@{model.noPostsMessageVisibility}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/transparent"
+                android:scaleType="center"
+                android:src="@drawable/ic_globe"
+                android:tint="@color/no_connection" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="@string/no_connection"
+                android:textColor="@color/no_connection"
+                android:textSize="@dimen/text_large" />
+
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@color/transparent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/feed_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <FrameLayout
+            android:id="@+id/menu_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <io.synoshy.zstu.presentation.menu.MenuButton
+                android:id="@+id/btn_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/margin_button_icon"
+                app:fabSize="auto" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/article_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/article_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</FrameLayout>
+</layout>

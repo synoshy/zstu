@@ -14,6 +14,7 @@ package io.synoshy.zstu.presentation.feed;
 
 import android.app.FragmentTransaction;
 import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,16 +26,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindDimen;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
-import io.synoshy.zstu.domain.common.lang.OneTimeRunnable;
-import io.synoshy.zstu.presentation.article.Article;
+import io.synoshy.zstu.databinding.ActivityFeedBinding;
 import io.synoshy.zstu.presentation.article.ArticleControl;
 import io.synoshy.zstu.presentation.article.ArticleFragment;
 import io.synoshy.zstu.presentation.common.ActivityBase;
@@ -80,40 +77,35 @@ public class FeedActivity extends ActivityBase
 
     private FeedListAdapter feedListAdapter;
 
+    private ActivityFeedBinding binding;
+
+    //region State values
+
     private boolean isMenuShown = false;
 
     private boolean isArticleShown = false;
+
+    private String shownArticleId;
+
+    //endregion
 
     private MenuFragment menuFragment;
 
     private ArticleFragment articleFragment;
 
-    private String shownArticleId;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_feed);
         ButterKnife.bind(this);
         initialize();
     }
 
     private void initialize() {
         feedViewModel = ViewModelProviders.of(this).get(FeedViewModel.class);
-        if (feedViewModel.getOnFirstUpdate() == null) {
-            feedViewModel.setOnFirstUpdate(new OneTimeRunnable(() -> {
-                swipeRefreshLayout.setRefreshing(true);
-                feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
-            }));
-        }
-
-        feedViewModel.getShowNoPostsMessage().observe(this,
-                x -> swipeToUpdateInfo.setVisibility(x ? View.VISIBLE : View.GONE));
-        feedViewModel.getArticles().observe(this, x -> {
-            feedListAdapter.mergeChanges(x);
-            feedViewModel.getShowNoPostsMessage().postValue(x.size() == 0);
-            feedViewModel.getOnFirstUpdate().run();
-        });
+        feedViewModel.observeNoPostsMessageVisibility(this, x -> binding.invalidateAll());
+        feedViewModel.observeArticles(this, x -> feedListAdapter.mergeChanges(feedViewModel.getArticles()));
 
         menuButton.initialize((AnimatedVectorDrawable) hamburgerToCrossIcon,
                 (AnimatedVectorDrawable) crossToHamburgerIcon);
@@ -127,31 +119,42 @@ public class FeedActivity extends ActivityBase
         if (menuFragment == null)
             menuFragment = new MenuFragment();
 
-        List<Article> articles = feedViewModel.getArticles().getValue();
-        if (articles == null)
-            articles = new ArrayList<>();
+        if (articleFragment == null)
+            articleFragment = new ArticleFragment();
 
-        feedListAdapter = new FeedListAdapter(articles);
+        feedListAdapter = new FeedListAdapter(feedViewModel.getArticles());
+        feedListAdapter.setOnItemClickListener(x -> showArticleInfo(x.getId()));
         feedList.setLayoutManager(new LinearLayoutManager(this));
         feedList.setAdapter(feedListAdapter);
         feedList.addItemDecoration(new OffsetDecoration(horizontalRowOffset, verticalRowOffset));
 
+        binding.setModel(feedViewModel);
+
         swipeRefreshLayout.setColorSchemeResources(R.color.zstu_blue, R.color.zstu_yellow);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setProgressViewOffset(true, startSpinnerOffset, endSpinnerOffset);
+
+        feedViewModel.runOnFirstDataLoad(() -> {
+            swipeRefreshLayout.setRefreshing(true);
+            feedViewModel.updateData(() -> swipeRefreshLayout.setRefreshing(false));
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (isMenuShown)
+        if (isMenuShown) {
+            isMenuShown = false;    //connected with showMenu() logic
             showMenu();
+        }
         else
             menuButton.resetState();
 
-        if (isArticleShown)
+        if (isArticleShown) {
+            isArticleShown = false; //connected with showArticle() logic
             showArticle(shownArticleId);
+        }
     }
 
     @Override
@@ -201,6 +204,9 @@ public class FeedActivity extends ActivityBase
     }
 
     public void showMenu() {
+        if (hasDisplayedFragments())
+            return;
+
         isMenuShown = true;
 
         getSupportFragmentManager().beginTransaction()
@@ -250,9 +256,11 @@ public class FeedActivity extends ActivityBase
         if (articleId == null)
             throw new RuntimeException("Failed to show details for null article id.");
 
+        if (hasDisplayedFragments())
+            return;
+
         isArticleShown = true;
         shownArticleId = articleId;
-        articleFragment = new ArticleFragment();
 
         Bundle params = new Bundle();
         params.putString("articleId", articleId);
@@ -279,5 +287,9 @@ public class FeedActivity extends ActivityBase
         fragmentManager.popBackStack();
 
         isArticleShown = false;
+    }
+
+    private boolean hasDisplayedFragments() {
+        return isArticleShown || isMenuShown;
     }
 }

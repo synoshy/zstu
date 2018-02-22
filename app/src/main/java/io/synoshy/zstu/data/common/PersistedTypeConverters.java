@@ -12,8 +12,11 @@
 
 package io.synoshy.zstu.data.common;
 
-import java.util.Date;
 import android.arch.persistence.room.TypeConverter;
+
+import java.util.Date;
+
+import io.synoshy.zstu.data.article.ArticleContent;
 
 public class PersistedTypeConverters {
 
@@ -33,18 +36,18 @@ public class PersistedTypeConverters {
     }
 
     @TypeConverter
-    public static String toStringArrayXml(String[] array) {
-        if (array == null)
+    public static String toArticleContentXml(ArticleContent[] articleContent) {
+        if (articleContent == null)
             return null;
 
-        return JsonUtil.serialize(array);
+        return JsonUtil.serialize(articleContent);
     }
 
     @TypeConverter
-    public static String[] fromStringArrayXml(String xml) {
+    public static ArticleContent[] fromArticleContentXml(String xml) {
         if (xml == null)
             return null;
 
-        return JsonUtil.deserialize(xml, String[].class);
+        return JsonUtil.deserialize(xml, ArticleContent[].class);
     }
 }

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2018 Denys Zosimovych Open Source Project
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -10,27 +10,28 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.feed;
+package io.synoshy.zstu.presentation.article;
 
-import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
-import io.synoshy.zstu.presentation.article.Article;
+public class InflatableText implements InflatableData {
 
-public class FeedRowViewModel extends ViewModel {
+    private String text;
 
-    private Article article;
-
-    public Article getArticle() {
-        return article;
+    public InflatableText(String text) {
+        this.text = text;
     }
 
-    public void setArticle(@NonNull Article article) {
-        this.article = article;
-    }
+    @Override
+    public View inflate(Context context, @NonNull LayoutParams params) {
+        TextView view = new TextView(context);
+        view.setLayoutParams(params);
+        view.setText(text);
 
-    public int getImageVisibility() {
-        return View.GONE;
+        return view;
     }
 }

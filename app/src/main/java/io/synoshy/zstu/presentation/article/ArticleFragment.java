@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.databinding.FragmentArticleBinding;
+import io.synoshy.zstu.domain.common.util.Validator;
 import io.synoshy.zstu.presentation.common.FragmentBase;
 import io.synoshy.zstu.presentation.common.HasBinding;
 
@@ -32,9 +33,11 @@ public class ArticleFragment extends FragmentBase implements HasBinding {
 
     private ArticleViewModel model;
 
+    private String articleId;
+
     private FragmentArticleBinding binding;
 
-    private Observer<Article> bindingInvalidator = x -> binding.invalidateAll();
+    private Observer bindingInvalidator = x -> binding.invalidateAll();
 
     @Nullable
     @Override
@@ -51,28 +54,38 @@ public class ArticleFragment extends FragmentBase implements HasBinding {
         initialize();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Validator.throwIfEmptyString(articleId, "Null article id was passed.");
+
+        model.loadArticle(articleId);
+        model.addModelObserver(this, bindingInvalidator);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("articleId", articleId);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.containsKey("articleId"))
+            articleId = savedInstanceState.getString("articleId");
+    }
+
     private void initialize() {
         model = ViewModelProviders.of(this).get(ArticleViewModel.class);
+
         Bundle args = getArguments();
-        if (args != null && args.containsKey("articleId")) {
-            String articleId = args.getString("articleId");
-            if (model.getArticle() == null) {
-                model.loadArticle(articleId);
-                model.getArticle().observe(this, bindingInvalidator);
-            }
-        }
+        if (args != null && args.containsKey("articleId"))
+            articleId = args.getString("articleId");
     }
 
     @Override
     public ViewDataBinding getBinding() {
         return binding;
-    }
-
-    @Nullable
-    public String getArticleId() {
-        if (model != null && model.getArticle() != null && model.getArticle().getValue() != null)
-            return model.getArticle().getValue().getId();
-
-        return null;
     }
 }

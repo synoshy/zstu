@@ -10,20 +10,11 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.common;
+package io.synoshy.zstu.domain.article;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.View;
+public interface IArticleContent {
 
-public class FragmentBase extends Fragment {
+    String getType();
 
-    @Nullable
-    @Override
-    public View getView() {
-        if (this instanceof HasBinding)
-            return ((HasBinding)this).getBinding().getRoot();
-
-        return super.getView();
-    }
+    String getValue();
 }

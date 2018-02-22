@@ -20,10 +20,10 @@ import io.synoshy.zstu.R;
 public class ImageBinder {
 
     @BindingAdapter("imageUrl")
-    public static void setImageUrl(ImageView imageView, String url) {
+    public static void imageUrl(ImageView imageView, String url) {
         GlideApp.with(imageView.getContext())
                 .load(url)
-                .placeholder(R.color.background_fade_light)
+                .placeholder(R.drawable.placeholder)
                 .into(imageView);
     }
 }

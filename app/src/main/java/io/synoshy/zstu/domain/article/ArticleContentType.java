@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2018 Denys Zosimovych Open Source Project
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -10,20 +10,11 @@
  * SOFTWARE.
  */
 
-package io.synoshy.zstu.presentation.common;
+package io.synoshy.zstu.domain.article;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.View;
+public class ArticleContentType {
 
-public class FragmentBase extends Fragment {
+    public static final String Text = "text";
 
-    @Nullable
-    @Override
-    public View getView() {
-        if (this instanceof HasBinding)
-            return ((HasBinding)this).getBinding().getRoot();
-
-        return super.getView();
-    }
+    public static final String Image = "image";
 }

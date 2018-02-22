@@ -30,11 +30,11 @@ public class ArticleTests {
     public void equals_DifferentIds_True() {
         Article article1 = new Article();
         article1.setId("0");
-        article1.setContent("content");
+        article1.setHeading("heading");
 
         Article article2 = new Article();
         article2.setId("1");
-        article2.setContent("content");
+        article2.setHeading("heading");
 
         assert article1.equals(article2);
     }

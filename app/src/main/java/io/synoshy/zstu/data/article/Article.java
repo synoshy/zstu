@@ -19,15 +19,18 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.annimon.stream.Stream;
+
 import java.util.Date;
 import java.util.UUID;
 
 import io.synoshy.zstu.domain.article.IArticle;
+import io.synoshy.zstu.domain.article.IArticleContent;
 
 @Entity(tableName = "articles",
         indices = {
             @Index(name = "index_article_id", value = "id", unique = true),
-            @Index(name = "index_article_search", value = {"heading", "content"})
+            @Index(name = "index_article_search", value = "heading")
         })
 public class Article implements IArticle {
 
@@ -42,15 +45,13 @@ public class Article implements IArticle {
     private String heading;
 
     @ColumnInfo(index = true)
-    private String content;
+    private ArticleContent[] content;
 
     private String description;
 
     private String imageUrl;
 
     private Date lastModified;
-
-    private String[] attachments;
 
     //endregion
 
@@ -77,11 +78,11 @@ public class Article implements IArticle {
         this.heading = heading;
     }
 
-    public String getContent() {
+    public ArticleContent[] getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(ArticleContent[] content) {
         this.content = content;
     }
 
@@ -109,14 +110,6 @@ public class Article implements IArticle {
         this.lastModified = lastModified;
     }
 
-    public String[] getAttachments() {
-        return attachments;
-    }
-
-    public void setAttachments(String[] attachments) {
-        this.attachments = attachments;
-    }
-
     //endregion
 
     public static Article newInstance(IArticle proto) {
@@ -126,25 +119,28 @@ public class Article implements IArticle {
         Article result = new Article();
         result.id = proto.getId();
         result.heading = proto.getHeading();
-        result.content = proto.getContent();
+        if (proto.getContent() == null)
+            result.content = null;
+        else {
+            result.content = Stream.of(proto.getContent())
+                    .map(ArticleContent::newInstance)
+                    .toArray(ArticleContent[]::new);
+        }
+
         result.description = proto.getDescription();
         result.imageUrl = proto.getImageUrl();
         result.lastModified = proto.getLastModified();
-        result.attachments = proto.getAttachments();
 
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        Article another = (Article)obj;
-        if (another == null) return false;
+        if (obj == null || !(obj instanceof Article))
+            return false;
 
-        return TextUtils.equals(this.getHeading(), another.getHeading())
-                && TextUtils.equals(this.getDescription(), another.getDescription())
-                && TextUtils.equals(this.getContent(), another.getContent())
-                && TextUtils.equals(this.getImageUrl(), another.getImageUrl())
-                && (this.getLastModified() != null && this.getLastModified().equals(another.getLastModified())
-                    || another.getLastModified() != null && another.getLastModified().equals(this.getLastModified()));
+        Article another = (Article)obj;
+//        return getId().equals(another.getId()); ---- when API is implemented
+        return getHeading().equals(another.getHeading());
     }
 }

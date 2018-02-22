@@ -22,11 +22,9 @@ public interface IArticle extends Entity {
 
     String getDescription();
 
-    String getContent();
+    IArticleContent[] getContent();
 
     String getImageUrl();
 
     Date getLastModified();
-
-    String[] getAttachments();
 }

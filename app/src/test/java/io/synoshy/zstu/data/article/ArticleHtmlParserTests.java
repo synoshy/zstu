@@ -19,8 +19,6 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import io.synoshy.zstu.presentation.article.Article;
-
 
 public class ArticleHtmlParserTests {
 
