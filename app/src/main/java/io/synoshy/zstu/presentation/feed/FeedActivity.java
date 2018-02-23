@@ -145,6 +145,9 @@ public class FeedActivity extends ActivityBase
         super.onResume();
 
         if (isMenuShown) {
+            if (menuFragment == null)
+                menuFragment = new MenuFragment();
+
             isMenuShown = false;    //connected with showMenu() logic
             showMenu();
         }
@@ -152,6 +155,9 @@ public class FeedActivity extends ActivityBase
             menuButton.resetState();
 
         if (isArticleShown) {
+            if (articleFragment == null)
+                articleFragment = new ArticleFragment();
+
             isArticleShown = false; //connected with showArticle() logic
             showArticle(shownArticleId);
         }

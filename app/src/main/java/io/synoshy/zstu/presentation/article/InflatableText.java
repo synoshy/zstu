@@ -14,6 +14,7 @@ package io.synoshy.zstu.presentation.article;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
@@ -30,6 +31,9 @@ public class InflatableText implements InflatableData {
     public View inflate(Context context, @NonNull LayoutParams params) {
         TextView view = new TextView(context);
         view.setLayoutParams(params);
+        view.setTextIsSelectable(true);
+        view.setLinksClickable(true);
+        view.setAutoLinkMask(Linkify.WEB_URLS);
         view.setText(text);
 
         return view;

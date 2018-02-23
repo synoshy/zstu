@@ -23,10 +23,13 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Stream;
 
 import java.text.DateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
 import io.synoshy.zstu.ZSTUApplication;
+import io.synoshy.zstu.domain.Constants;
 import io.synoshy.zstu.domain.article.ArticleContentType;
 import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.domain.article.IArticle;
@@ -105,13 +108,15 @@ public class ArticleViewModel extends AndroidViewModel {
         if (article == null)
             return null;
 
-        IArticleContent[] content = article.getContent();
-        if (content == null)
-            return null;
-
-        return Stream.of(content)
-                .map(this::createInflatableData)
-                .toArray(InflatableData[]::new);
+        InflatableText description = new InflatableText(article.getDescription());
+        return new InflatableData[]{description};
+//        IArticleContent[] content = article.getContent();
+//        if (content == null)
+//            return null;
+//
+//        return Stream.of(content)
+//                .map(this::createInflatableData)
+//                .toArray(InflatableData[]::new);
     }
 
     private InflatableData createInflatableData(IArticleContent articleContent) {
