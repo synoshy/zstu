@@ -32,7 +32,7 @@
                 android:background="@color/transparent"
                 android:text="@{model.heading}"
                 android:textColor="@color/row_feed_heading"
-                android:textSize="@dimen/row_feed_heading" />
+                android:textSize="@dimen/text_heading" />
 
             <View
                 android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                         android:gravity="end"
                         android:text="@{model.lastModified}"
                         android:textColor="@color/row_feed_date"
-                        android:textSize="@dimen/row_feed_date" />
+                        android:textSize="@dimen/text_common" />
 
                 </LinearLayout>
 

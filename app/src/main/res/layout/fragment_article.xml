@@ -36,22 +36,13 @@
                     style="@style/AppTheme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_larger"
                     android:layout_marginEnd="@dimen/margin_normal"
                     android:layout_marginStart="@dimen/margin_normal"
                     android:layout_marginTop="@dimen/margin_normal"
+                    android:gravity="end"
                     android:text="@{model.heading}"
                     android:textColor="@color/article_text"
-                    android:textSize="@dimen/text_large" />
-
-                <ImageView
-                    style="@style/AppTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_larger"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    app:imageUrl="@{model.imageUrl}" />
+                    android:textSize="@dimen/text_heading" />
 
                 <TextView
                     style="@style/AppTheme"
@@ -59,9 +50,21 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:gravity="end"
                     android:text="@{model.lastModified}"
-                    android:textColor="@color/article_text" />
+                    android:textColor="@color/article_text"
+                    android:textSize="@dimen/text_small" />
+
+                <ImageView
+                    style="@style/AppTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_larger"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    app:imageUrl="@{model.imageUrl}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

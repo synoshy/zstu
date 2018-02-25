@@ -14,10 +14,13 @@ package io.synoshy.zstu.presentation.article;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
+
+import io.synoshy.zstu.R;
 
 public class InflatableText implements InflatableData {
 
@@ -35,6 +38,7 @@ public class InflatableText implements InflatableData {
         view.setLinksClickable(true);
         view.setAutoLinkMask(Linkify.WEB_URLS);
         view.setText(text);
+        view.setTextSize(context.getResources().getDimensionPixelSize(R.dimen.text_normal));
 
         return view;
     }
