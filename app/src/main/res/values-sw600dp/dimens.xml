@@ -2,7 +2,7 @@
 <resources>
     <dimen name="menu_item_text">20sp</dimen>
     <dimen name="text_small">14sp</dimen>
-    <dimen name="text_normal">15sp</dimen>
+    <dimen name="text_normal">16sp</dimen>
     <dimen name="row_feed_heading">27sp</dimen>
     <dimen name="row_feed_description">16sp</dimen>
     <dimen name="text_heading">27sp</dimen>
