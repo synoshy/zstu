@@ -47,7 +47,7 @@
                 android:gravity="center"
                 android:text="@string/no_connection"
                 android:textColor="@color/no_connection"
-                android:textSize="@dimen/text_large" />
+                android:textSize="@dimen/text_heading" />
 
         </LinearLayout>
 
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
-                android:layout_margin="@dimen/margin_button_icon"
+                android:layout_margin="@dimen/margin_normal"
                 app:fabSize="auto" />
 
         </FrameLayout>

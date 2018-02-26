@@ -19,6 +19,7 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,18 @@ public class ArticleFragment extends FragmentBase implements HasBinding {
 
     private void initialize() {
         model = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        model.setBtnBackClickHandler(x -> {
+            if (getActivity() instanceof ArticleControl)
+                ((ArticleControl) getActivity()).hideArticle();
+            else {
+                FragmentManager fm = getFragmentManager();
+                if (fm != null) {
+                    fm.beginTransaction()
+                            .remove(this)
+                            .commit();
+                }
+            }
+        });
 
         Bundle args = getArguments();
         if (args != null && args.containsKey("articleId"))

@@ -15,12 +15,12 @@
         android:background="@color/article_background">
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/btn_floating_size"
+            android:layout_height="@dimen/btn_floating_size"
             android:layout_gravity="top|start"
-            android:layout_margin="@dimen/margin_button_icon"
-            android:src="@drawable/ic_arrow_left"
-            app:fabSize="auto" />
+            android:layout_margin="@dimen/margin_normal"
+            android:onClick="@{model::btnBackClick}"
+            android:src="@drawable/ic_arrow_left" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -42,7 +42,9 @@
                     android:gravity="end"
                     android:text="@{model.heading}"
                     android:textColor="@color/article_text"
-                    android:textSize="@dimen/text_heading" />
+                    android:textSize="@dimen/text_heading"
+                    app:spanLines="@{2}"
+                    app:spanSize="@{@dimen/btn_floating_size}" />
 
                 <TextView
                     style="@style/AppTheme"

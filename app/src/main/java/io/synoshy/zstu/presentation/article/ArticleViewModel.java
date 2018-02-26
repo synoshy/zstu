@@ -20,20 +20,16 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 
-import com.annimon.stream.Stream;
-
 import java.text.DateFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
 import io.synoshy.zstu.ZSTUApplication;
-import io.synoshy.zstu.domain.Constants;
 import io.synoshy.zstu.domain.article.ArticleContentType;
 import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.domain.article.IArticle;
 import io.synoshy.zstu.domain.article.IArticleContent;
+import io.synoshy.zstu.domain.common.lang.Action;
 import io.synoshy.zstu.domain.common.util.Validator;
 
 public class ArticleViewModel extends AndroidViewModel {
@@ -42,6 +38,8 @@ public class ArticleViewModel extends AndroidViewModel {
     ArticleManager articleManager;
 
     private LiveData<IArticle> articleModel;
+
+    private Action btnBackClickHandler;
 
     private IArticle getArticle() {
         return articleModel == null
@@ -98,6 +96,15 @@ public class ArticleViewModel extends AndroidViewModel {
         return article == null
                 ? null
                 : article.getImageUrl();
+    }
+
+    public void setBtnBackClickHandler(Action btnBackClickHandler) {
+        this.btnBackClickHandler = btnBackClickHandler;
+    }
+
+    public void btnBackClick(Object view) {
+        if (btnBackClickHandler != null)
+            btnBackClickHandler.run(view);
     }
 
     /**
