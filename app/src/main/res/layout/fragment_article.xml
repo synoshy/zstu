@@ -15,10 +15,10 @@
         android:background="@color/article_background">
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="@dimen/btn_floating_size"
-            android:layout_height="@dimen/btn_floating_size"
+            android:layout_width="@dimen/btn_tool_size"
+            android:layout_height="@dimen/btn_tool_size"
             android:layout_gravity="top|start"
-            android:layout_margin="@dimen/margin_normal"
+            android:layout_margin="@dimen/btn_tool_margin"
             android:onClick="@{model::btnBackClick}"
             android:src="@drawable/ic_arrow_left" />
 
@@ -44,7 +44,7 @@
                     android:textColor="@color/article_text"
                     android:textSize="@dimen/text_heading"
                     app:spanLines="@{2}"
-                    app:spanSize="@{@dimen/btn_floating_size}" />
+                    app:spanSize="@{@dimen/btn_tool_size + @dimen/btn_tool_margin}" />
 
                 <TextView
                     style="@style/AppTheme"

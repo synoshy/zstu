@@ -16,5 +16,6 @@
     <dimen name="menu_item_text">16sp</dimen>
     <dimen name="menu_item_border">0dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
-    <dimen name="btn_floating_size">56dp</dimen>
+    <dimen name="btn_tool_margin">12dp</dimen>
+    <dimen name="btn_tool_size">56dp</dimen>
 </resources>

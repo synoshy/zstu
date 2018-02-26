@@ -77,10 +77,10 @@
 
             <io.synoshy.zstu.presentation.menu.MenuButton
                 android:id="@+id/btn_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/btn_tool_size"
+                android:layout_height="@dimen/btn_tool_size"
                 android:layout_gravity="top|end"
-                android:layout_margin="@dimen/margin_normal"
+                android:layout_margin="@dimen/btn_tool_margin"
                 app:fabSize="auto" />
 
         </FrameLayout>
