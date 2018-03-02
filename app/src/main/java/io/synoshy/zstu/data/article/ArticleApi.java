@@ -23,4 +23,7 @@ public interface ArticleApi {
 
     @GET
     Call<Element> getNewsContainer(@Url HttpUrl url);
+
+    @GET
+    Call<Element> getArticle(@Url HttpUrl url);
 }

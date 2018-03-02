@@ -22,7 +22,7 @@ import java.util.List;
 import io.synoshy.zstu.domain.common.Manager;
 import okhttp3.HttpUrl;
 
-public interface ArticleManager extends Manager<IArticle> {
+public interface IArticleManager extends Manager<IArticle> {
 
     /**
      * Get list of {@link IArticle} by heading.
@@ -44,10 +44,17 @@ public interface ArticleManager extends Manager<IArticle> {
     LiveData<List<IArticle>> getListBatch(int batchNumber, int batchSize);
 
     /**
-     * Load list of {@link IArticle} from network to storage.
+     * Load list of {@link IArticle} from network.
      * @param url Url to load data.
      * @param newerThan Bottom news last modified filter.
      * @param callback Callback that is executed after data is returned.
      */
     void loadNewsFromNetwork(@NonNull HttpUrl url, Date newerThan, @NonNull Function<List<IArticle>, Void> callback);
+
+    /**
+     * Load an {@link IArticle} entity from network.
+     * @param article Object to load data to.
+     * @param callback Callback that is executed after data is returned.
+     */
+    void loadArticleContent(@NonNull IArticle article, @NonNull Function<IArticle, Void> callback);
 }

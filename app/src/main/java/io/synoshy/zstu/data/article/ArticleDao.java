@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2018 Denys Zosimovych Open Source Project
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,6 +18,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -25,10 +26,16 @@ import java.util.List;
 public interface ArticleDao {
 
     /**
-    * Create or update collection of {@link Article}.
-    */
+     * Create or update collection of {@link Article}.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void createOrUpdate(Article... articleEntities);
+
+    /**
+     * Update collection of {@link Article}.
+     */
+    @Update(onConflict = OnConflictStrategy.FAIL)
+    void update(Article... articleEntities);
 
     /**
      * Get {@link Article} by id.

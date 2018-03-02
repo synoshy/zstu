@@ -25,12 +25,12 @@ public class Constants {
 
     public static class Network {
 
-        public static final HttpUrl NEWS_ULR = HttpUrl.parse("https://ztu.edu.ua/");
+        public static final HttpUrl NEWS_ULR = HttpUrl.parse("https://news.ztu.edu.ua/");
     }
 
     public static class Locale {
 
-        public static final String DATE_TIME_FORMAT = "dd.MM.yyyy hh:mm";
+        public static final String DATE_TIME_FORMAT = "yyyy-mm-dd'T'HH:mm:ss";
 
         public static final java.util.Locale UKRAINIAN = new java.util.Locale("uk", "UA");
     }

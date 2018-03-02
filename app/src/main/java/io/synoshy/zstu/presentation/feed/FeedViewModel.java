@@ -34,7 +34,7 @@ import javax.inject.Inject;
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.domain.Constants;
-import io.synoshy.zstu.domain.article.ArticleManager;
+import io.synoshy.zstu.domain.article.IArticleManager;
 import io.synoshy.zstu.domain.article.IArticle;
 import io.synoshy.zstu.domain.common.lang.OneTimeRunnable;
 import io.synoshy.zstu.domain.common.util.Validator;
@@ -43,7 +43,7 @@ import io.synoshy.zstu.presentation.article.ArticleViewModel;
 public class FeedViewModel extends AndroidViewModel {
 
     @Inject
-    ArticleManager articleManager;
+    IArticleManager articleManager;
 
     private LiveData<List<IArticle>> articles;
 

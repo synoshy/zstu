@@ -20,10 +20,16 @@ import java.util.List;
 public interface Manager<T> {
 
     /**
-     * Create or update entity collection.
-     * @param entities Entities to be created.
+     * Create entity collection.
+     * @param entities Entities to be created or updated.
      */
     void createOrUpdate(@NonNull T... entities);
+
+    /**
+     * Update entity collection.
+     * @param entities Entities to be updated.
+     */
+    void update(@NonNull T... entities);
 
     /**
      * Get an entity by id.

@@ -24,7 +24,7 @@ public class ArticleHtmlParserTests {
 
     @Test(expected = NullPointerException.class)
     public void parseArticle_NullElement_ExceptionThrown() {
-        ArticleHtmlParser.parseArticle(null);
+        ArticleHtmlParser.parseArticlePreview(null);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ArticleHtmlParserTests {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2018, 1, 29, 0, 0);
 
-        Article article = ArticleHtmlParser.parseArticle(Jsoup.parse(articleNode));
+        Article article = ArticleHtmlParser.parseArticlePreview(Jsoup.parse(articleNode));
 
         assert article.getHeading().equals("heading")
                 && article.getDescription().equals("description")
@@ -63,7 +63,7 @@ public class ArticleHtmlParserTests {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2018, 1, 2, 0, 0);
 
-        Article article = ArticleHtmlParser.parseArticle(Jsoup.parse(articleNode));
+        Article article = ArticleHtmlParser.parseArticlePreview(Jsoup.parse(articleNode));
 
         assert article.getLastModified().equals(calendar.getTime());
     }
@@ -96,7 +96,7 @@ public class ArticleHtmlParserTests {
         };
 
         for (ArticleElementTestData data : testData)
-            Assert.assertEquals(ArticleHtmlParser.selectArticleNodes(data.html).size(), data.expectedElementsSize);
+            Assert.assertEquals(ArticleHtmlParser.selectArticlePreviewNodes(data.html).size(), data.expectedElementsSize);
     }
 
     class ArticleElementTestData {

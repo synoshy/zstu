@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="text"
+            type="java.lang.String" />
+    </data>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_normal"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="@{text}"
+        android:textColor="@color/row_feed_content"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/text_normal" />
+</layout>

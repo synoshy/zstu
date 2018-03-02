@@ -17,7 +17,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-public class SpannedTextBinder {
+public class SpannableTextBinder {
 
     @BindingAdapter({"android:text", "bind:spanLines", "bind:spanSize"})
     public static void spannableText(TextView textView, String spannableText, int spanLines, float spanSize) {

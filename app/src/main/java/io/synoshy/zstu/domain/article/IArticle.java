@@ -27,4 +27,6 @@ public interface IArticle extends Entity {
     String getImageUrl();
 
     Date getLastModified();
+
+    String getUrl();
 }

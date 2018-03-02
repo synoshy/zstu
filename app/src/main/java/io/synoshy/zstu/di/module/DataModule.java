@@ -24,7 +24,7 @@ import io.synoshy.zstu.data.article.ArticleApi;
 import io.synoshy.zstu.data.article.ArticleManagerImpl;
 import io.synoshy.zstu.data.common.AppDatabase;
 import io.synoshy.zstu.data.common.HtmlElementAdapter;
-import io.synoshy.zstu.domain.article.ArticleManager;
+import io.synoshy.zstu.domain.article.IArticleManager;
 import retrofit2.Retrofit;
 
 @Module
@@ -39,7 +39,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    ArticleManager provideArticleManager(AppDatabase appDatabase, ArticleApi articleLoader) {
+    IArticleManager provideArticleManager(AppDatabase appDatabase, ArticleApi articleLoader) {
         return new ArticleManagerImpl(appDatabase, articleLoader);
     }
 

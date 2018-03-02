@@ -17,7 +17,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.annimon.stream.Stream;
 
@@ -25,7 +24,6 @@ import java.util.Date;
 import java.util.UUID;
 
 import io.synoshy.zstu.domain.article.IArticle;
-import io.synoshy.zstu.domain.article.IArticleContent;
 
 @Entity(tableName = "articles",
         indices = {
@@ -44,7 +42,6 @@ public class Article implements IArticle {
     @ColumnInfo(index = true)
     private String heading;
 
-    @ColumnInfo(index = true)
     private ArticleContent[] content;
 
     private String description;
@@ -52,6 +49,8 @@ public class Article implements IArticle {
     private String imageUrl;
 
     private Date lastModified;
+
+    private String url;
 
     //endregion
 
@@ -110,6 +109,14 @@ public class Article implements IArticle {
         this.lastModified = lastModified;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     //endregion
 
     public static Article newInstance(IArticle proto) {
@@ -130,6 +137,7 @@ public class Article implements IArticle {
         result.description = proto.getDescription();
         result.imageUrl = proto.getImageUrl();
         result.lastModified = proto.getLastModified();
+        result.url = proto.getUrl();
 
         return result;
     }

@@ -13,13 +13,14 @@
 package io.synoshy.zstu.presentation.article;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.databinding.DataBindingUtil;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 
 import io.synoshy.zstu.R;
-import io.synoshy.zstu.presentation.common.glide.GlideApp;
+import io.synoshy.zstu.databinding.InflatableImageBinding;
 
 public class InflatableImage implements InflatableData {
 
@@ -30,15 +31,11 @@ public class InflatableImage implements InflatableData {
     }
 
     @Override
-    public View inflate(Context context, @NonNull LayoutParams params) {
-        ImageView view = new ImageView(context);
-        view.setLayoutParams(params);
-        view.setAdjustViewBounds(true);
-        GlideApp.with(context)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder)
-                .into(view);
+    public View inflate(Context context, @Nullable ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        InflatableImageBinding imageBinding = DataBindingUtil.inflate(inflater, R.layout.inflatable_image, parent, false);
+        imageBinding.setImageUrl(imageUrl);
 
-        return view;
+        return imageBinding.getRoot();
     }
 }

@@ -20,10 +20,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.synoshy.zstu.R;
 import io.synoshy.zstu.databinding.FragmentArticleBinding;
 import io.synoshy.zstu.domain.common.util.Validator;
@@ -40,11 +43,15 @@ public class ArticleFragment extends FragmentBase implements HasBinding {
 
     private Observer bindingInvalidator = x -> binding.invalidateAll();
 
+    @BindView(R.id.spinner)
+    ContentLoadingProgressBar spinner;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_article, container, false);
         binding.setModel(model);
+        ButterKnife.bind(this, binding.getRoot());
 
         return binding.getRoot();
     }
@@ -60,7 +67,8 @@ public class ArticleFragment extends FragmentBase implements HasBinding {
         super.onStart();
         Validator.throwIfEmptyString(articleId, "Null article id was passed.");
 
-        model.loadArticle(articleId);
+        spinner.setVisibility(View.VISIBLE);
+        model.loadArticle(articleId, () -> spinner.setVisibility(View.GONE));
         model.addModelObserver(this, bindingInvalidator);
     }
 

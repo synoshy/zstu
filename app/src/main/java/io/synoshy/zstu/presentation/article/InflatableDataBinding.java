@@ -15,7 +15,6 @@ package io.synoshy.zstu.presentation.article;
 import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 
 public class InflatableDataBinding {
 
@@ -25,8 +24,7 @@ public class InflatableDataBinding {
             return;
 
         Context context = container.getContext();
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        for (int i = data.length - 1; i >= 0; i--)
-            container.addView(data[i].inflate(context, params));
+        for (int i = 0; i < data.length; i++)
+            container.addView(data[i].inflate(context, container));
     }
 }

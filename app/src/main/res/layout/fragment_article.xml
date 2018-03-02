@@ -58,19 +58,17 @@
                     android:textColor="@color/article_text"
                     android:textSize="@dimen/text_small" />
 
-                <ImageView
-                    style="@style/AppTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    app:imageUrl="@{model.imageUrl}" />
+                <android.support.v4.widget.ContentLoadingProgressBar
+                    android:id="@+id/spinner"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center"
+                    android:translationZ="2dp"
+                    android:visibility="invisible" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_normal"
                     android:orientation="vertical"
                     app:inflatableData="@{model.inflatableData}" />
 

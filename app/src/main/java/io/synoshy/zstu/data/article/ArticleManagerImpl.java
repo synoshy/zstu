@@ -17,6 +17,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.annimon.stream.Stream;
 
@@ -26,16 +27,17 @@ import java.util.Date;
 import java.util.List;
 
 import io.synoshy.zstu.data.common.AppDatabase;
-import io.synoshy.zstu.domain.article.ArticleManager;
+import io.synoshy.zstu.domain.article.ArticleContentType;
 import io.synoshy.zstu.domain.article.IArticle;
-import io.synoshy.zstu.domain.common.util.Validator;
+import io.synoshy.zstu.domain.article.IArticleManager;
 import io.synoshy.zstu.domain.common.lang.SimpleAsyncTask;
+import io.synoshy.zstu.domain.common.util.Validator;
 import okhttp3.HttpUrl;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ArticleManagerImpl implements ArticleManager {
+public class ArticleManagerImpl implements IArticleManager {
 
     private AppDatabase appDatabase;
 
@@ -65,6 +67,18 @@ public class ArticleManagerImpl implements ArticleManager {
     }
 
     @Override
+    public void update(@NonNull IArticle... entities) {
+        Validator.throwIfNull(entities, "Could not update null entities.");
+        Validator.throwIf(entities.length == 0, "No entities to update.");
+
+        Article[] articleEntities = Stream.of(entities)
+                .map(Article::newInstance)
+                .toArray(Article[]::new);
+
+        SimpleAsyncTask.execute(() -> getAppDatabase().articles().update(articleEntities));
+    }
+
+    @Override
     public LiveData<IArticle> getById(String id) {
         return transform(getAppDatabase().articles().getById(id));
     }
@@ -88,8 +102,8 @@ public class ArticleManagerImpl implements ArticleManager {
 
             @Override
             public void onResponse(Call<Element> call, Response<Element> response) {
-                Stream<IArticle> stream = Stream.of(ArticleHtmlParser.selectArticleNodes(response.body()))
-                        .map(ArticleHtmlParser::parseArticle);
+                Stream<IArticle> stream = Stream.of(ArticleHtmlParser.selectArticlePreviewNodes(response.body()))
+                        .map(ArticleHtmlParser::parseArticlePreview);
                 if (newerThan != null)
                     stream = stream.filter(x -> x.getLastModified().compareTo(newerThan) > 0);
 
@@ -99,6 +113,33 @@ public class ArticleManagerImpl implements ArticleManager {
             @Override
             public void onFailure(Call<Element> call, Throwable t) {
                 callback.apply(null);
+            }
+        });
+    }
+
+    @Override
+    public void loadArticleContent(@NonNull IArticle article, @NonNull Function<IArticle, Void> resultCallback) {
+        String url = article.getUrl();
+        Validator.throwIfEmptyString(url, "Provided article does not have url.");
+
+        articleLoader.getArticle(HttpUrl.parse(article.getUrl())).enqueue(new Callback<Element>() {
+
+            @Override
+            public void onResponse(Call<Element> call, Response<Element> response) {
+                Article articleImpl = Article.newInstance(article);
+                ArticleContent[] rawContent = ArticleHtmlParser.parseArticleContent(
+                        ArticleHtmlParser.selectArticleNode(response.body()));
+                //copies of thumbnail image are removed
+                ArticleContent[] content = Stream.of(rawContent)
+                                                .filter(x -> !TextUtils.isEmpty(x.getValue()) && x.getValue() != article.getImageUrl())
+                                                .toArray(ArticleContent[]::new);
+                articleImpl.setContent(content);
+                resultCallback.apply(articleImpl);
+            }
+
+            @Override
+            public void onFailure(Call<Element> call, Throwable t) {
+                resultCallback.apply(null);
             }
         });
     }

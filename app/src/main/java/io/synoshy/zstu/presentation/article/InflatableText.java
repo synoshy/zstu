@@ -13,14 +13,14 @@
 package io.synoshy.zstu.presentation.article;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.text.util.Linkify;
-import android.util.TypedValue;
+import android.databinding.DataBindingUtil;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import io.synoshy.zstu.R;
+import io.synoshy.zstu.databinding.InflatableTextBinding;
 
 public class InflatableText implements InflatableData {
 
@@ -31,15 +31,11 @@ public class InflatableText implements InflatableData {
     }
 
     @Override
-    public View inflate(Context context, @NonNull LayoutParams params) {
-        TextView view = new TextView(context);
-        view.setLayoutParams(params);
-        view.setTextIsSelectable(true);
-        view.setLinksClickable(true);
-        view.setAutoLinkMask(Linkify.WEB_URLS);
-        view.setText(text);
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.text_normal));
+    public View inflate(Context context, @Nullable ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        InflatableTextBinding textBinding = DataBindingUtil.inflate(inflater, R.layout.inflatable_text, parent, false);
+        textBinding.setText(text);
 
-        return view;
+        return textBinding.getRoot();
     }
 }

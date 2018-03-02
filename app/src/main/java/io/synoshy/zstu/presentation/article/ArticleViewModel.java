@@ -20,22 +20,25 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 
+import com.annimon.stream.Stream;
+
 import java.text.DateFormat;
 
 import javax.inject.Inject;
 
 import io.synoshy.zstu.ZSTUApplication;
 import io.synoshy.zstu.domain.article.ArticleContentType;
-import io.synoshy.zstu.domain.article.ArticleManager;
 import io.synoshy.zstu.domain.article.IArticle;
 import io.synoshy.zstu.domain.article.IArticleContent;
+import io.synoshy.zstu.domain.article.IArticleManager;
 import io.synoshy.zstu.domain.common.lang.Action;
+import io.synoshy.zstu.domain.common.lang.OneTimeRunnable;
 import io.synoshy.zstu.domain.common.util.Validator;
 
 public class ArticleViewModel extends AndroidViewModel {
 
     @Inject
-    ArticleManager articleManager;
+    IArticleManager articleManager;
 
     private LiveData<IArticle> articleModel;
 
@@ -52,8 +55,23 @@ public class ArticleViewModel extends AndroidViewModel {
         ((ZSTUApplication) getApplication()).getAppComponent().inject(this);
     }
 
-    public void loadArticle(String articleId) {
+    public void loadArticle(String articleId, Runnable callback) {
         articleModel = articleManager.getById(articleId);
+        OneTimeRunnable afterFirstLoad = new OneTimeRunnable(
+                () -> {
+                    IArticle article = articleModel.getValue();
+                    if (article != null && (article.getContent() == null || article.getContent().length == 0)) {
+                        articleManager.loadArticleContent(articleModel.getValue(),
+                                x -> {
+                                    articleManager.update(x);
+                                    if (callback != null)
+                                        callback.run();
+
+                                    return null;
+                                });
+                    }
+                });
+        articleModel.observeForever(x -> afterFirstLoad.run());
     }
 
     public void setArticle(IArticle article) {
@@ -91,13 +109,6 @@ public class ArticleViewModel extends AndroidViewModel {
                 : format.format(article.getLastModified());
     }
 
-    public String getImageUrl() {
-        IArticle article = getArticle();
-        return article == null
-                ? null
-                : article.getImageUrl();
-    }
-
     public void setBtnBackClickHandler(Action btnBackClickHandler) {
         this.btnBackClickHandler = btnBackClickHandler;
     }
@@ -115,15 +126,13 @@ public class ArticleViewModel extends AndroidViewModel {
         if (article == null)
             return null;
 
-        InflatableText description = new InflatableText(article.getDescription());
-        return new InflatableData[]{description};
-//        IArticleContent[] content = article.getContent();
-//        if (content == null)
-//            return null;
-//
-//        return Stream.of(content)
-//                .map(this::createInflatableData)
-//                .toArray(InflatableData[]::new);
+        IArticleContent[] content = article.getContent();
+        if (content == null)
+            return null;
+
+        return Stream.of(content)
+                .map(this::createInflatableData)
+                .toArray(InflatableData[]::new);
     }
 
     private InflatableData createInflatableData(IArticleContent articleContent) {
